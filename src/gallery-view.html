@@ -113,7 +113,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       _imageClicked(e) {
         console.log(e);
-        window.history.pushState({}, null, '/view4/');
+        window.history.pushState({}, null, '/event/'+this.hashtag.slice(1) + '/' + e.detail.index);
         window.dispatchEvent(new CustomEvent('location-changed'));
       }
 

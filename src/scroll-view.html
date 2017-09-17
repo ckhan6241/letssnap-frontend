@@ -109,9 +109,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.numberSelected = 0;
       }
 
+      ready() {
+        super.ready();
+        console.log(this.index);
+        this.index = undefined;
+      }
+
       static get properties() {
         return {
           hashtag: String,
+          index: {
+            type: String,
+            notify: true,
+          },
           images: {
             type: Array,
             value: _.range(20).map(function (x, i) {
