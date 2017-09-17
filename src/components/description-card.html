@@ -1,0 +1,36 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+
+<dom-module id="description-card">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+        padding: 0px;
+        text-align: center;
+      }
+
+      img {
+        width: 40%;
+        min-width: 120px;
+      }
+
+      p {
+        font-size: var(--small-font);
+      }
+    </style>
+    <img src="../../images/icon.jpeg">
+    <h1>LetsSnap</h1>
+    <p>Hosting an event? Day out with friend?</p>
+    <p>Crowdsource photos from everyone!</p>
+  </template>
+
+  <script>
+    class Description extends Polymer.Element {
+      static get is() {
+        return 'description-card';
+      }
+    }
+
+    window.customElements.define(Description.is, Description);
+  </script>
+</dom-module>

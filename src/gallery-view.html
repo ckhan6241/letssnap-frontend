@@ -1,0 +1,142 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/app-layout/app-grid/app-grid-style.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/iron-icons/image-icons.html">
+<link rel="import" href="./components/single-image.html">
+<link rel="import" href="shared-styles.html">
+
+<dom-module id="gallery-view">
+  <template>
+    <style include="app-grid-style"></style>
+    <style include="shared-styles">
+      :host {
+        display: flex;
+        flex-direction: column;
+        overflow-y: scroll;
+        text-align: center;
+        height: 100%;
+      }
+
+      ul {
+        padding: 0px;
+        list-style: none;
+        width: 100%;
+        width: auto;
+      }
+
+      li {
+        padding: 0px;
+        margin: 0px;
+      }
+
+      paper-icon-button {
+        background: white;
+        color: black;
+        -webkit-border-radius: 50%;
+        -moz-border-radius: 50%;
+        border-radius: 50%;
+        width: 56px;
+        height: 56px;
+      }
+
+      .gallery {
+        padding: 10px;
+        overflow-y: scroll;
+        flex-grow: 1;
+        flex-shrink: 1;
+      }
+
+      .app-grid {
+        --app-grid-columns: 3;
+        --app-grid-item-height: 100%;
+        --app-grid-gutter: 3px;
+        margin-top: 0px;
+      }
+
+      footer {
+        padding: 10px;
+      }
+
+      .button-group {
+        font-size: var(--small-font);
+        display: flex;
+        justify-content: flex-end;
+        width: 100%;
+      }
+
+    </style>
+    <h1>{{hashtag}}</h1>
+    <div class="gallery">
+      <ul class="app-grid" has-aspect-ratio>
+        <template is="dom-repeat" items="{{images}}" as="image">
+          <li>
+            <single-image index="{{index}}" url="{{image.url}}" is-selected="{{image.isSelected}}"
+                          is-selecting="{{isSelecting}}"></single-image>
+          </li>
+        </template>
+      </ul>
+    </div>
+    <div class="button-group">
+      <paper-button flat>Share</paper-button>
+      <paper-button flat>Download</paper-button>
+    </div>
+    <footer>
+      <paper-icon-button icon="image:photo-camera"></paper-icon-button>
+    </footer>
+  </template>
+
+  <script>
+    class GalleryView extends Polymer.Element {
+      static get is() {
+        return 'gallery-view';
+      }
+
+      constructor() {
+        super();
+        this.numberSelected = 0;
+      }
+
+      ready() {
+        super.ready();
+        window.addEventListener('imageclicked', this._imageClicked.bind(this));
+      }
+
+      _imageClicked(e) {
+        console.log(e);
+        window.history.pushState({}, null, '/view4/');
+        window.dispatchEvent(new CustomEvent('location-changed'));
+      }
+
+      static get properties() {
+        return {
+          images: {
+            type: Array,
+            value: _.range(9).map(function (x, i) {
+              return {'url': 'https://unsplash.it/200/200/?image=' + i, 'isSelected': false};
+            }),
+          },
+          selectedImages: {
+            type: Array,
+            value: [],
+          },
+          isSelecting: {
+            type: Boolean,
+            value: false,
+          },
+        };
+      }
+    }
+
+    window.customElements.define(GalleryView.is, GalleryView);
+  </script>
+</dom-module>

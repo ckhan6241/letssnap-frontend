@@ -1,0 +1,21 @@
+{
+  "name": "LetsSnap",
+  "short_name": "LetsSnap",
+  "description": "A group event photo sharing app",
+  "start_url": "./?homescreen=1",
+  "display": "standalone",
+  "theme_color": "#f7f7f7",
+  "background_color": "#f7f7f7",
+  "icons": [
+    {
+      "src": "images/icon-192x192.jpeg",
+      "sizes": "192x192",
+      "type": "image/jpeg"
+    },
+    {
+      "src": "images/icon-512x512.jpeg",
+      "sizes": "512x512",
+      "type": "image/jpeg"
+    }
+  ]
+}

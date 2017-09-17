@@ -1,0 +1,141 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/app-layout/app-grid/app-grid-style.html">
+<link rel="import" href="../bower_components/iron-icons/social-icons.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="shared-styles.html">
+
+<dom-module id="scroll-view">
+  <template>
+    <style include="app-grid-style"></style>
+    <style include="shared-styles">
+      :host {
+        display: flex;
+        flex-direction: column;
+        overflow-y: scroll;
+        text-align: center;
+        height: 100%;
+      }
+
+      paper-icon-button {
+        background: white;
+        color: black;
+        -webkit-border-radius: 50%;
+        -moz-border-radius: 50%;
+        border-radius: 50%;
+        width: 56px;
+        height: 56px;
+      }
+
+      .app-grid {
+        --app-grid-columns: 1;
+        --app-grid-item-height: 115%;
+      }
+
+      ul {
+        padding: 0px;
+        list-style: none;
+        width: 100%;
+        width: auto;
+        background-color: white;
+      }
+
+      li {
+        padding: 0px;
+        margin: 0px;
+      }
+
+      li > div {
+        height: 100%;
+      }
+
+      .button-group {
+        top: 87%;
+        display: flex;
+        justify-content: flex-end;
+        width: 100%;
+        position: absolute;
+        background-color: var(--background-color);
+        height: 13%;
+      }
+
+      paper-icon-button {
+        width: 42px;
+        height: 42px;
+        background-color: var(--background-color);
+      }
+
+      img {
+        width: 100%;
+      }
+
+    </style>
+    <h1>{{hashtag}}</h1>
+    <div class="gallery">
+      <ul class="app-grid" has-aspect-ratio>
+        <template is="dom-repeat" items="{{images}}" as="image">
+          <li>
+            <div>
+              <img src="{{image.url}}"/>
+              <div class="button-group">
+                <paper-icon-button icon="social:share"></paper-icon-button>
+                <paper-icon-button icon="icons:file-download"></paper-icon-button>
+              </div>
+            </div>
+          </li>
+        </template>
+      </ul>
+    </div>
+  </template>
+
+  <script>
+    class ScrollView extends Polymer.Element {
+      static get is() {
+        return 'scroll-view';
+      }
+
+      constructor() {
+        super();
+        this.numberSelected = 0;
+      }
+
+      static get properties() {
+        return {
+          hashtag: String,
+          images: {
+            type: Array,
+            value: _.range(20).map(function (x, i) {
+              return {'url': 'https://unsplash.it/500/500/?image=' + i, 'isSelected': false};
+            }),
+          },
+          selectedImages: {
+            type: Array,
+            value: [],
+          },
+          isSelecting: {
+            type: Boolean,
+            value: false,
+            observer: 'isSelectingUpdated'
+          },
+        };
+      }
+
+      isSelectingUpdated() {
+        console.log('observed');
+//        this.isSelecting = !this.isSelecting;
+      }
+    }
+
+    window.customElements.define(ScrollView.is, ScrollView);
+  </script>
+</dom-module>

@@ -1,0 +1,80 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="shared-styles.html">
+
+<dom-module id="add-event-page">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+        padding: 10px;
+        text-align: center;
+      }
+
+      img {
+        width: 40%;
+        min-width: 120px;
+      }
+
+      .form {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        padding-bottom: 20px;
+      }
+
+      input {
+        border: 1px solid lightgrey;
+        border-radius: 2px;
+        padding: 5px 8px;
+        margin: 4px 10px;
+        font-size: var(--small-font);
+      }
+
+      input[type=text]::-webkit-input-placeholder {
+        color: lightgrey;
+      }
+
+      paper-button {
+        text-transform: uppercase;
+        background-color: indigo;
+        color: white;
+      }
+
+    </style>
+
+    <img src="../images/icon.jpeg">
+    <h1>Tell us about your event!</h1>
+    <div class="form">
+      <input type="text" placeholder="NUS School of Computing Graduation Night 2018">
+      <input type="text" placeholder="7 July 2018, 6:00PM">
+      <input type="text" placeholder="8 July 2018, 1:00AM">
+      <input type="text" placeholder="#SoCGradNight18">
+    </div>
+    <paper-button raised>
+      <iron-icon icon="add"></iron-icon>
+      Add event
+    </paper-button>
+  </template>
+
+  <script>
+    class AddEventPage extends Polymer.Element {
+      static get is() {
+        return 'add-event-page';
+      }
+    }
+
+    window.customElements.define(AddEventPage.is, AddEventPage);
+  </script>
+</dom-module>

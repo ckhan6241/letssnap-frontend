@@ -1,0 +1,125 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/app-layout/app-header/app-header.html">
+<link rel="import" href="../bower_components/app-layout/app-header-layout/app-header-layout.html">
+<link rel="import" href="../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
+<link rel="import" href="../bower_components/app-layout/app-toolbar/app-toolbar.html">
+<link rel="import" href="../bower_components/app-route/app-location.html">
+<link rel="import" href="../bower_components/app-route/app-route.html">
+<link rel="import" href="../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../bower_components/iron-selector/iron-selector.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+
+<link rel="lazy-import" href="home-page.html">
+<link rel="lazy-import" href="event-page.html">
+<link rel="lazy-import" href="add-event-page.html">
+
+<dom-module id="my-app">
+  <template>
+    <style>
+      :host {
+        --app-primary-color: #4285f4;
+        --app-secondary-color: black;
+        --background-color: #f7f7f7;
+        --small-font: 12px;
+        display: block;
+      }
+
+      app-drawer-layout:not([narrow]) [drawer-toggle] {
+        display: none;
+      }
+
+      app-header {
+        color: #fff;
+        background-color: var(--app-primary-color);
+      }
+
+      app-header paper-icon-button {
+        --paper-icon-button-ink-color: white;
+      }
+
+      iron-pages {
+        height: 100%;
+      }
+
+    </style>
+
+    <app-location route="{{route}}" url-space-regex="^[[rootPath]]"></app-location>
+    <app-route
+        route="{{route}}"
+        pattern="[[rootPath]]:page"
+        data="{{routeData}}"
+        tail="{{subroute}}"></app-route>
+
+    <iron-pages
+        selected="[[page]]"
+        attr-for-selected="name"
+        fallback-selection="home"
+        role="main">
+      <home-page name="home"></home-page>
+      <event-page name="event"></event-page>
+      <add-event-page name="add-event"></add-event-page>
+    </iron-pages>
+  </template>
+
+  <script>
+    class MyApp extends Polymer.Element {
+      static get is() {
+        return 'my-app';
+      }
+
+      static get properties() {
+        return {
+          page: {
+            type: String,
+            reflectToAttribute: true,
+            observer: '_pageChanged',
+          },
+          hashtag: {
+            type: String,
+            reflectToAttribute: true,
+            notify: true,
+          },
+          routeData: Object,
+          subrouteData: Object,
+          subroute: Object,
+          rootPath: String,
+        };
+      }
+
+      static get observers() {
+        return [
+          '_routePageChanged(routeData.page)',
+        ];
+      }
+
+      _routePageChanged(page) {
+        this.page = page || 'home';
+      }
+
+      _pageChanged(page) {
+        var resolvedPageUrl = this.resolveUrl(page + '-page.html');
+        Polymer.importHref(
+          resolvedPageUrl,
+          null,
+          this._redirectToHome.bind(this),
+          true);
+      }
+
+      _redirectToHome() {
+        this.page = 'home';
+      }
+    }
+
+    window.customElements.define(MyApp.is, MyApp);
+  </script>
+</dom-module>

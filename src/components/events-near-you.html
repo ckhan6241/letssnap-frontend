@@ -1,0 +1,66 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="./single-hashtag.html">
+
+<dom-module id="events-near-you">
+  <template>
+    <style>
+      :host {
+        display: block;
+        text-align: center;
+      }
+
+      .event-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      p {
+        font-size: var(--small-font);
+      }
+
+    </style>
+    <h1>Events near you</h1>
+    <p>Tap to join!</p>
+    <div class="event-container">
+      <template is="dom-repeat" items="{{events}}" as="event">
+        <single-hashtag hashtag="{{event.hashtag}}"></single-hashtag>
+      </template>
+    </div>
+  </template>
+
+  <script>
+    class EventsNearYou extends Polymer.Element {
+      static get is() {
+        return 'events-near-you';
+      }
+
+      static get properties() {
+        return {
+          events: {
+            type: Array,
+            value: [
+              {
+                hashtag: '#SoCGradNight18',
+              },
+              {
+                hashtag: '#MSFTDataScienceHacks',
+              },
+              {
+                hashtag: '#SoCWelfarePacks',
+              },
+              {
+                hashtag: '#EnginDay2018',
+              },
+              {
+                hashtag: '#NUSCareerFair2018',
+              },
+            ],
+          },
+        };
+      }
+    }
+
+    window.customElements.define(EventsNearYou.is, EventsNearYou);
+  </script>
+</dom-module>

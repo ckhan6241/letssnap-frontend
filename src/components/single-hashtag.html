@@ -1,0 +1,36 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+
+<dom-module id="single-hashtag">
+  <template>
+    <style include="">
+      paper-button {
+        font-size: var(--small-font);
+        text-transform: none;
+      }
+    </style>
+    <paper-button on-click="handleClickHashtag" flat>{{hashtag}}</paper-button>
+  </template>
+  <script>
+    class SingleHashtag extends Polymer.Element {
+      static get is() {
+        return 'single-hashtag';
+      }
+
+      static get properties() {
+        return {
+          hashtag: {
+            type: String,
+          },
+        };
+      }
+
+      handleClickHashtag(e) {
+        window.history.pushState({}, null, '/event/' + this.hashtag.slice(1));
+        window.dispatchEvent(new CustomEvent('location-changed'));
+      }
+    }
+
+    window.customElements.define(SingleHashtag.is, SingleHashtag);
+  </script>
+</dom-module>

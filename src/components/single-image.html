@@ -1,0 +1,109 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+
+<dom-module id="single-image">
+  <template>
+    <style include="shared-styles">
+
+      :host {
+        display: flex;
+      }
+
+      paper-button {
+        padding: 0px;
+        margin: 0px;
+        width: 100%;
+        background: white;
+      }
+
+      img {
+        width: 100%;
+      }
+
+      img.isSelected {
+        border: 2px solid red;
+      }
+    </style>
+    <paper-button flat><img class$={{getClass(isSelected)}} src="{{url}}"></paper-button>
+  </template>
+
+  <script>
+    const TOUCH_DURATION = 1000;
+    const DEBOUNCE_DURATION = 100;
+
+    class SingleImage extends Polymer.Element {
+      static get is() {
+        return 'single-image';
+      }
+
+      constructor() {
+        super();
+        this.touchMove = false;
+      }
+
+      static get properties() {
+        return {
+          url: {
+            type: String
+          },
+          isSelected: {
+            type: Boolean,
+            notify: true,
+          },
+          isSelecting: {
+            type: Boolean,
+            notify: true,
+          },
+        };
+      }
+
+      getClass(isSelected) {
+        return isSelected ? 'isSelected' : '';
+      }
+
+      handleTouchStart(e) {
+        e.preventDefault();
+        if (this.touchMove) return
+        if (this.isSelecting) {
+          this.selectTimer = setTimeout(this._select.bind(this), DEBOUNCE_DURATION);
+        } else {
+          this.isShortTouch = true;
+          this.initializeSelectTimer = setTimeout(this._initializeSelect.bind(this), TOUCH_DURATION);
+        }
+      }
+
+      _select() {
+        this.isSelected = !this.isSelected;
+      }
+
+      _initializeSelect() {
+        this.isSelecting = true;
+        this.isSelected = true;
+        this.isShortTouch = false;
+      }
+
+      handleTouchEnd(e) {
+        if (this.isShortTouch) {
+          window.dispatchEvent(new CustomEvent('imageclicked', {detail: {index: this.index}}));
+        }
+        clearInterval(this.initializeSelectTimer);
+        this.touchMove = false;
+      }
+
+      handleTouchMove(e) {
+        clearInterval(this.selectTimer);
+        clearInterval(this.initializeSelectTimer);
+        this.touchMove = true;
+      }
+
+      ready() {
+        super.ready();
+        this.addEventListener('touchstart', this.handleTouchStart.bind(this));
+        this.addEventListener('touchend', this.handleTouchEnd.bind(this));
+        this.addEventListener('touchmove', this.handleTouchMove.bind(this));
+      }
+    }
+
+    window.customElements.define(SingleImage.is, SingleImage);
+  </script>
+</dom-module>

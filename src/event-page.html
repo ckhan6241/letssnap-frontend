@@ -1,0 +1,74 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="./gallery-view.html">
+<link rel="import" href="./scroll-view.html">
+<link rel="import" href="shared-styles.html">
+
+<dom-module id="event-page">
+  <template>
+    <style include="app-grid-style"></style>
+    <style include="shared-styles">
+      :host {
+        display: flex;
+        flex-direction: column;
+        overflow-y: scroll;
+        text-align: center;
+        height: 100%;
+      }
+    </style>
+    <app-location route="{{route}}" url-space-regex="^[[rootPath]]/event"></app-location>
+    <app-route
+        route="{{route}}"
+        pattern="[[rootPath]]event/:hashtag"
+        data="{{routeData}}"
+        tail="{{subroute}}"></app-route>
+    <app-route
+        route="{{subroute}}"
+        pattern="/:index"
+        data="{{subrouteData}}"></app-route>
+    <template is="dom-if" if="{{!subrouteData.index}}">
+      <gallery-view hashtag="{{_prepareHashtag(routeData.hashtag)}}"></gallery-view>
+    </template>
+    <template is="dom-if" if="{{subrouteData.index}}">
+      <scroll-view hashtag="{{_prepareHashtag(routeData.hashtag)}}" index="{{subrouteData.index}}"></scroll-view>
+    </template>
+  </template>
+
+  <script>
+    class EventPage extends Polymer.Element {
+      static get is() {
+        return 'event-page';
+      }
+
+      ready() {
+        super.ready();
+        console.log(this.route, this.subroute, this.subrouteData);
+      }
+
+      static get properties() {
+        return {
+          route: Object,
+          routeData: Object,
+          subroute: Object,
+          subrouteData: Object,
+          rootPath: String,
+        };
+      }
+
+      _prepareHashtag(hashtag) {
+        return '#' + hashtag;
+      }
+    }
+
+    window.customElements.define(EventPage.is, EventPage);
+  </script>
+</dom-module>
