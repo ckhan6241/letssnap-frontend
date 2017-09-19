@@ -62,7 +62,6 @@
       }
 
       handleTouchStart(e) {
-        e.preventDefault();
         if (this.touchMove) return
         if (this.isSelecting) {
           this.selectTimer = setTimeout(this._select.bind(this), DEBOUNCE_DURATION);
@@ -93,7 +92,12 @@
       handleTouchMove(e) {
         clearInterval(this.selectTimer);
         clearInterval(this.initializeSelectTimer);
+        this.isShortTouch = false;
         this.touchMove = true;
+      }
+
+      handleContextMenu(e) {
+        e.preventDefault();
       }
 
       ready() {
@@ -101,6 +105,7 @@
         this.addEventListener('touchstart', this.handleTouchStart.bind(this));
         this.addEventListener('touchend', this.handleTouchEnd.bind(this));
         this.addEventListener('touchmove', this.handleTouchMove.bind(this));
+        this.addEventListener('contextmenu', this.handleContextMenu.bind(this));
       }
     }
 
