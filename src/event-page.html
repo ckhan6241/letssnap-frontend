@@ -50,7 +50,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <gallery-view hashtag="{{routeData.hashtag}}"></gallery-view>
       </template>
       <template is="dom-if" if="{{index}}">
-        <scroll-view index="{{index}}"></scroll-view>
+        <scroll-view focus-index="{{index}}"></scroll-view>
       </template>
     </div>
   </template>
@@ -67,6 +67,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             type: Number,
             reflectToAttribute: true
           },
+          focusIndex: Number,
           route: Object,
           routeData: Object,
           subroute: Object,
