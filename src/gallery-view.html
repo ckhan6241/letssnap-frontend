@@ -92,8 +92,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </ul>
     </div>
     <div class="button-group">
-      <paper-button flat>Share</paper-button>
-      <paper-button flat>Download</paper-button>
+      <paper-button on-click="_handleClickClearSelection" disabled="{{!isSelecting}}" flat>Clear Selection</paper-button>
+      <paper-button disabled="{{!isSelecting}}" flat>Share</paper-button>
+      <paper-button disabled="{{!isSelecting}}" flat>Download</paper-button>
     </div>
     <footer>
       <iron-label class="camera">
@@ -116,9 +117,27 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.numberSelected = 0;
       }
 
+      _imageSelection(e) {
+        this.numberSelected += e.detail.newState ? 1 : -1;
+        if (this.numberSelected === 0) {
+          this.isSelecting = false;
+        }
+      }
+
+      _handleClickClearSelection() {
+        console.log('clearing selection');
+        this.isSelecting = false;
+        this.numberSelected = 0;
+        this.images = _.map(this.images, m => ({
+          ...m,
+          'isSelected': false
+        }))
+      }
+
       ready() {
         super.ready();
         window.addEventListener('imageclicked', this._imageClicked.bind(this));
+        window.addEventListener('imageselection', this._imageSelection.bind(this));
       }
 
       _imageClicked(e) {
@@ -134,10 +153,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             value: _.range(9).map(function (x, i) {
               return {'url': 'https://unsplash.it/200/200/?image=' + i, 'isSelected': false};
             }),
-          },
-          selectedImages: {
-            type: Array,
-            value: [],
           },
           isSelecting: {
             type: Boolean,
