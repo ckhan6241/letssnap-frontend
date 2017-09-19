@@ -109,12 +109,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.numberSelected = 0;
       }
 
-      ready() {
-        super.ready();
-        console.log(this.index);
-        this.index = undefined;
-      }
-
       static get properties() {
         return {
           hashtag: String,
@@ -141,7 +135,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
       isSelectingUpdated() {
-        console.log('observed');
+//        console.log('observed');
 //        this.isSelecting = !this.isSelecting;
       }
     }

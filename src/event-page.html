@@ -9,13 +9,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/app-route/app-location.html">
+<link rel="import" href="../bower_components/app-route/app-route.html">
 <link rel="import" href="./gallery-view.html">
 <link rel="import" href="./scroll-view.html">
 <link rel="import" href="shared-styles.html">
 
 <dom-module id="event-page">
   <template>
-    <style include="app-grid-style"></style>
     <style include="shared-styles">
       :host {
         display: flex;
@@ -35,11 +36,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         route="{{subroute}}"
         pattern="/:index"
         data="{{subrouteData}}"></app-route>
-    <template is="dom-if" if="{{!subrouteData.index}}">
+    <template is="dom-if" if="{{!index}}">
       <gallery-view hashtag="{{_prepareHashtag(routeData.hashtag)}}"></gallery-view>
     </template>
-    <template is="dom-if" if="{{subrouteData.index}}">
-      <scroll-view hashtag="{{_prepareHashtag(routeData.hashtag)}}" index="{{subrouteData.index}}"></scroll-view>
+    <template is="dom-if" if="{{index}}">
+      <scroll-view hashtag="{{_prepareHashtag(routeData.hashtag)}}" index="{{index}}"></scroll-view>
     </template>
   </template>
 
@@ -49,19 +50,28 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         return 'event-page';
       }
 
-      ready() {
-        super.ready();
-        console.log(this.route, this.subroute, this.subrouteData);
-      }
-
       static get properties() {
         return {
+          index: {
+            type: Number,
+            reflectToAttribute: true
+          },
           route: Object,
           routeData: Object,
           subroute: Object,
           subrouteData: Object,
-          rootPath: String,
+          rootPath: String
         };
+      }
+
+      static get observers() {
+        return [
+          '_indexChanged(subroute.path, subrouteData.index)'
+        ];
+      }
+
+      _indexChanged(path, index) {
+        this.index = path && index || '';
       }
 
       _prepareHashtag(hashtag) {
