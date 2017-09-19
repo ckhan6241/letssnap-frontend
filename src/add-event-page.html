@@ -11,6 +11,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="./components/page-header.html">
 <link rel="import" href="shared-styles.html">
 
 <dom-module id="add-event-page">
@@ -18,13 +19,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <style include="shared-styles">
       :host {
         display: block;
-        padding: 10px;
         text-align: center;
+      }
+
+      page-header {
+        height: 66px;
       }
 
       img {
         width: 40%;
         min-width: 120px;
+        padding-top: 10px;
       }
 
       .form {
@@ -32,6 +37,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         flex-direction: column;
         align-items: stretch;
         padding-bottom: 20px;
+        padding: 0px 10px;
       }
 
       input {
@@ -50,10 +56,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         text-transform: uppercase;
         background-color: indigo;
         color: white;
+        margin: 10px;
       }
 
     </style>
-
+    <page-header show-back-button="true"></page-header>
     <img src="../images/icon.jpeg">
     <h1>Tell us about your event!</h1>
     <div class="form">

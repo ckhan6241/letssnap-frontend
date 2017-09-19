@@ -13,6 +13,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/app-route/app-route.html">
 <link rel="import" href="./gallery-view.html">
 <link rel="import" href="./scroll-view.html">
+<link rel="import" href="./components/page-header.html">
 <link rel="import" href="shared-styles.html">
 
 <dom-module id="event-page">
@@ -21,9 +22,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       :host {
         display: flex;
         flex-direction: column;
+        height: 100vh;
+      }
+
+      page-header {
+        height: 66px;
+      }
+
+      .page-body {
         overflow-y: scroll;
-        text-align: center;
-        height: 100%;
+        flex: 1 1;
       }
     </style>
     <app-location route="{{route}}" url-space-regex="^[[rootPath]]/event"></app-location>
@@ -36,12 +44,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         route="{{subroute}}"
         pattern="/:index"
         data="{{subrouteData}}"></app-route>
-    <template is="dom-if" if="{{!index}}">
-      <gallery-view hashtag="{{_prepareHashtag(routeData.hashtag)}}"></gallery-view>
-    </template>
-    <template is="dom-if" if="{{index}}">
-      <scroll-view hashtag="{{_prepareHashtag(routeData.hashtag)}}" index="{{index}}"></scroll-view>
-    </template>
+    <page-header title="{{_prepareHashtag(routeData.hashtag)}}" show-back-button="true"></page-header>
+    <div class="page-body">
+      <template is="dom-if" if="{{!index}}">
+        <gallery-view hashtag="{{routeData.hashtag}}"></gallery-view>
+      </template>
+      <template is="dom-if" if="{{index}}">
+        <scroll-view index="{{index}}"></scroll-view>
+      </template>
+    </div>
   </template>
 
   <script>

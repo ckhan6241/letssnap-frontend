@@ -75,7 +75,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
     </style>
-    <h1>{{hashtag}}</h1>
     <div class="gallery">
       <ul class="app-grid" has-aspect-ratio>
         <template is="dom-repeat" items="{{images}}" as="image">
@@ -113,7 +112,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       _imageClicked(e) {
         console.log(e);
-        window.history.pushState({}, null, '/event/'+this.hashtag.slice(1) + '/' + e.detail.index);
+        window.history.pushState({}, null, '/event/'+this.hashtag+'/'+e.detail.index);
         window.dispatchEvent(new CustomEvent('location-changed'));
       }
 

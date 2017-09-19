@@ -1,0 +1,57 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+
+<dom-module id="page-header">
+  <template>
+    <style include="shared-styles">
+      :host {
+        width: 100%;
+        display: block;
+        display: flex;
+        align-items: center;
+        background-color: white;
+        border-bottom: 1px solid black;
+      }
+
+      iron-icon {
+        padding: 10px;
+      }
+
+      h1 {
+        flex-grow: 1;
+        text-align: center;
+      }
+    </style>
+    <template is="dom-if" if="{{showBackButton}}">
+      <iron-icon on-click="handleClickBackButton" icon="icons:arrow-back"></iron-icon>
+    </template>
+    <h1>{{ title }}</h1>
+  </template>
+
+  <script>
+    class PageHeader extends Polymer.Element {
+      static get is() {
+        return 'page-header';
+      }
+
+      ready() {
+        super.ready();
+        console.log('page header', this.title, this.showBackButton, this);
+      }
+
+      static get properties() {
+        return {
+          showBackButton: Boolean,
+          title: String
+        }
+      }
+
+      handleClickBackButton() {
+        console.log('going back');
+        window.history.back();
+      }
+    }
+
+    window.customElements.define(PageHeader.is, PageHeader);
+  </script>
+</dom-module>
