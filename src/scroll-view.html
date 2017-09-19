@@ -9,10 +9,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
-<link rel="import" href="../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../bower_components/app-layout/app-grid/app-grid-style.html">
-<link rel="import" href="../bower_components/iron-icons/social-icons.html">
-<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="./components/single-image-scroll-view.html">
 <link rel="import" href="shared-styles.html">
 
 <dom-module id="scroll-view">
@@ -84,13 +82,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <ul class="app-grid" has-aspect-ratio>
         <template is="dom-repeat" items="{{images}}" as="image">
           <li>
-            <div>
-              <img src="{{image.url}}"/>
-              <div class="button-group">
-                <paper-icon-button icon="social:share"></paper-icon-button>
-                <paper-icon-button icon="icons:file-download"></paper-icon-button>
-              </div>
-            </div>
+            <single-image-scroll-view index="{{image.index}}" focus-index="{{focusIndex}}" url="{{image.url}}"></single-image-scroll-view>
           </li>
         </template>
       </ul>
@@ -111,14 +103,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       static get properties() {
         return {
           hashtag: String,
-          index: {
+          focusIndex: {
             type: String,
             notify: true,
           },
           images: {
             type: Array,
             value: _.range(20).map(function (x, i) {
-              return {'url': 'https://unsplash.it/500/500/?image=' + i, 'isSelected': false};
+              return {'url': 'https://unsplash.it/500/500/?image=' + i, 'isSelected': false, 'index': i};
             }),
           },
           selectedImages: {
