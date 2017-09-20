@@ -129,7 +129,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.isSelecting = false;
         this.numberSelected = 0;
         this.images = _.map(this.images, m => ({
-          ...m,
+          'url': m.url,
           'isSelected': false
         }))
       }
@@ -150,7 +150,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         return {
           images: {
             type: Array,
-            value: _.range(9).map(function (x, i) {
+            value: _.range(50).map(function (x, i) {
               return {'url': 'https://unsplash.it/200/200/?image=' + i, 'isSelected': false};
             }),
           },

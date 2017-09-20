@@ -39,6 +39,7 @@
       constructor() {
         super();
         this.touchMove = false;
+        this.isShortTouch = false;
       }
 
       static get properties() {
@@ -73,17 +74,20 @@
 
       _select() {
         this.isSelected = !this.isSelected;
+        window.dispatchEvent(new CustomEvent('imageselection', {detail: {newState: this.isSelected}}))
       }
 
       _initializeSelect() {
         this.isSelecting = true;
         this.isSelected = true;
         this.isShortTouch = false;
+        window.dispatchEvent(new CustomEvent('imageselection', {detail: {newState: this.isSelected}}))
       }
 
       handleTouchEnd(e) {
         if (this.isShortTouch) {
           window.dispatchEvent(new CustomEvent('imageclicked', {detail: {index: this.index}}));
+          this.isShortTouch = false;
         }
         clearInterval(this.initializeSelectTimer);
         this.touchMove = false;
