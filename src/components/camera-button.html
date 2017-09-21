@@ -1,0 +1,76 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/iron-label/iron-label.html">
+<link rel="import" href="../../bower_components/iron-icons/image-icons.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+
+<dom-module id="camera-button">
+  <template>
+    <style include="shared-styles">
+      .cameraButton {
+      display: none;
+      }
+
+      paper-icon-button {
+        background: white;
+        color: black;
+        -webkit-border-radius: 50%;
+        -moz-border-radius: 50%;
+        border-radius: 50%;
+        width: 56px;
+        height: 56px;
+      }
+    </style>
+
+    <iron-label>
+      <span>
+        <paper-icon-button icon="image:photo-camera"></paper-icon-button>
+      </span>
+      <input class="cameraButton" id="photo" type="file" accept="image/*" capture="camera" on-change="_isUploaded" />
+    </iron-label>
+
+    <iron-ajax
+      id="photoUpload"
+      method="POST"
+      url="https://www.letssnap.tk/photos"
+      body='{"file": "{{file}}", "ext": "{{ext}}", "hash": "{{hash}}"}'
+      handle-as="json"
+      on-response="_handlePhotoUploadResponse"
+    >
+    </iron-ajax>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'camera-button',
+      properties: {
+        file: String,
+        ext: String,
+        hash: String
+      },
+
+      _isUploaded: function(e) {
+        var formData = new FormData();
+        var file = e.target.files[0];
+        console.log("file: ", file); // debug
+        formData.append("file", file);
+        var ext = "." + file.name.split(".").pop();
+        console.log("ext: ", ext); // debug
+        formData.append("ext", ext);
+        console.log("hash: ", this.hash); // debug
+        formData.append("hash", this.hash)
+
+        var request = new XMLHttpRequest();
+        request.open("POST", "https://www.letssnap.tk/photos");
+        request.send(formData);
+      },
+
+      _handlePhotoUploadResponse: function(e) {
+        var reqBody = this.$.photoUpload.body;
+        console.log(reqBody);
+        console.log("response from server: ", e.detail.response);
+      }
+    });
+  </script>
+</dom-module>
