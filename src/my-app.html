@@ -66,9 +66,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         attr-for-selected="name"
         fallback-selection="home"
         role="main">
-      <home-page name="home"></home-page>
+      <home-page name="home" latlng="{{latlng}}"></home-page>
       <event-page name="event"></event-page>
-      <add-event-page name="add-event"></add-event-page>
+      <add-event-page name="add-event" lat-lng="{{latlng}}"></add-event-page>
     </iron-pages>
   </template>
 
@@ -76,6 +76,34 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     class MyApp extends Polymer.Element {
       static get is() {
         return 'my-app';
+      }
+
+      ready() {
+        super.ready();
+        if (navigator.geolocation) { // check if browser supports geolocation
+          navigator.geolocation.watchPosition(function (position) {
+              // success
+              var lat = position.coords.latitude;
+              var lng = position.coords.longitude;
+              this.latlng = {
+                'lat': lat,
+                'lng': lng
+              }
+            }.bind(this), function (error) {
+              switch (error.code) {
+                case error.PERMISSION_DENIED:
+                  console.log('Permission denied');
+                  break;
+                case error.POSITION_UNAVAILABLE:
+                  console.log('Position unavailable');
+                  break;
+                case error.TIMEOUT:
+                  console.log('Timeout');
+                  break;
+              }
+            }.bind(this)
+          );
+        }
       }
 
       static get properties() {
@@ -90,6 +118,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             reflectToAttribute: true,
             notify: true,
           },
+          latlng: Object,
           routeData: Object,
           subrouteData: Object,
           subroute: Object,
