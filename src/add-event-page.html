@@ -75,9 +75,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <label for="name">Event name</label>
       <input id="name" type="text" placeholder="NUS School of Computing Graduation Night 2018">
       <label for="start">Start date</label>
-      <input id="start" type="datetime-local" placeholder="7 July 2018, 6:00PM">
+      <input id="start" type="datetime-local">
       <label for="stop">End date</label>
-      <input id="stop" type="datetime-local" placeholder="8 July 2018, 1:00AM">
+      <input id="stop" type="datetime-local">
       <label for="hash">Hashtag</label>
       <input id="hash" type="text" placeholder="#SoCGradNight18">
     </div>
@@ -93,12 +93,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         return 'add-event-page';
       }
 
+      ready() {
+        super.ready();
+        const currTime = moment().format('YYYY-MM-DDTHH:mm');
+        this.shadowRoot.getElementById('start').value = currTime;
+        this.shadowRoot.getElementById('stop').value = currTime;
+      }
+
       handleClickAddEvent() {
         const name = this.shadowRoot.getElementById("name").value;
         const start = this.shadowRoot.getElementById("start").value;
         const stop = this.shadowRoot.getElementById("stop").value;
         const hash = this.shadowRoot.getElementById("hash").value;
-        createEvent(name, start, stop, hash, function(res) {
+        if (!this.latlng) {console.log('no lat lon'); return;}
+        const lat = this.latlng.lat;
+        const lng = this.latlng.lng;
+        createEvent(name, start, stop, hash, lat, lng, function(res) {
           if (res.ok) {
             window.history.pushState({}, null, '/event/'+hash);
             window.dispatchEvent(new CustomEvent('location-changed'));
