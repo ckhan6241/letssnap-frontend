@@ -57,7 +57,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <events-near-you></events-near-you>
     <div class="add-event-container">
       <h1>Hosting an event?</h1>
-      <paper-button on-click="handleClickAddEvent" raised>
+      <paper-button on-click="handleClickLoginWithFacebook" raised>
         Login with facebook
       </paper-button>
       <paper-button on-click="handleClickAddEvent" raised>
@@ -76,6 +76,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       handleClickAddEvent() {
         window.history.pushState({}, null, '/add-event');
         window.dispatchEvent(new CustomEvent('location-changed'));
+      }
+
+      handleClickLoginWithFacebook() {
+        console.log('login clicked')
+        login(res=>console.log(res));
       }
     }
 
