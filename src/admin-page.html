@@ -1,0 +1,89 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="./components/page-header.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="shared-styles.html">
+
+<dom-module id="admin-page">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+      }
+
+      page-header {
+        height: 66px;
+      }
+
+      .past-event {
+        flex-grow: 1;
+        padding: 10px;
+      }
+      .add-event-container {
+        padding-bottom: 50px;
+        text-align: center;
+      }
+
+      paper-button {
+        text-transform: uppercase;
+        background-color: indigo;
+        color: white;
+      }
+
+    </style>
+    <page-header title="Manage your events" show-back-button="true"></page-header>
+    <div class="past-event">
+      <div>Your Past events</div>
+      <ul>
+        <template is="dom-repeat" items="{{pastEvents}}" as="event">
+          <li>{{event.hashtag}}</li>
+        </template>
+      </ul>
+      <template is="dom-if" if="_hasNoPastEvents(pastEvents)">
+        No past events
+      </template>
+    </div>
+    <div class="add-event-container">
+      <paper-button on-click="handleClickAddEvent" raised>
+        <iron-icon icon="add"></iron-icon>
+        Add event
+      </paper-button>
+    </div>
+  </template>
+
+  <script>
+    class AdminPage extends Polymer.Element {
+      static get is() {
+        return 'admin-page';
+      }
+
+      static get properties() {
+        return {
+          pastEvents: Array,
+        };
+      }
+
+      _hasNoPastEvents(pastEvents) {
+        return pastEvents.length === 0;
+      }
+
+      handleClickAddEvent() {
+        window.history.pushState({}, null, '/add-event');
+        window.dispatchEvent(new CustomEvent('location-changed'));
+      }
+    }
+
+    window.customElements.define(AdminPage.is, AdminPage);
+  </script>
+</dom-module>

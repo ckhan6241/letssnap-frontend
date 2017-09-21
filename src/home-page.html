@@ -67,10 +67,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           Login with facebook
           </a>
         </paper-button>
-      <paper-button on-click="handleClickAddEvent" raised>
-        <iron-icon icon="add"></iron-icon>
-        Add event
-      </paper-button>
     </div>
   </template>
 
@@ -78,11 +74,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     class HomePage extends Polymer.Element {
       static get is() {
         return 'home-page';
-      }
-
-      handleClickAddEvent() {
-        window.history.pushState({}, null, '/add-event');
-        window.dispatchEvent(new CustomEvent('location-changed'));
       }
     }
 

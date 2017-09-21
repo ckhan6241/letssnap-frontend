@@ -22,6 +22,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="lazy-import" href="home-page.html">
 <link rel="lazy-import" href="event-page.html">
 <link rel="lazy-import" href="add-event-page.html">
+<link rel="lazy-import" href="admin-page.html">
 
 <dom-module id="my-app">
   <template>
@@ -68,7 +69,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         role="main">
       <home-page name="home" latlng="{{latlng}}"></home-page>
       <event-page name="event"></event-page>
-      <add-event-page name="add-event" lat-lng="{{latlng}}"></add-event-page>
+      <add-event-page name="add-event" latlng="{{latlng}}"></add-event-page>
+      <admin-page name="admin"></admin-page>
     </iron-pages>
   </template>
 
@@ -89,6 +91,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 'lat': lat,
                 'lng': lng
               }
+              console.log('lat lon registered');
             }.bind(this), function (error) {
               switch (error.code) {
                 case error.PERMISSION_DENIED:
