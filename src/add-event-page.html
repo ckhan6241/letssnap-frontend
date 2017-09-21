@@ -40,6 +40,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         padding: 0px 10px;
       }
 
+      label {
+        width: 100%;
+        text-align: left;
+        padding: 0px 12px;
+        font-size: var(--small-font);
+        padding-top: 5px;
+      }
+
       input {
         border: 1px solid lightgrey;
         border-radius: 2px;
@@ -48,7 +56,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         font-size: var(--small-font);
       }
 
-      input[type=text]::-webkit-input-placeholder {
+      input::-webkit-input-placeholder {
         color: lightgrey;
       }
 
@@ -64,12 +72,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <img src="../images/icon.jpeg">
     <h1>Tell us about your event!</h1>
     <div class="form">
-      <input type="text" placeholder="NUS School of Computing Graduation Night 2018">
-      <input type="text" placeholder="7 July 2018, 6:00PM">
-      <input type="text" placeholder="8 July 2018, 1:00AM">
-      <input type="text" placeholder="#SoCGradNight18">
+      <label for="name">Event name</label>
+      <input id="name" type="text" placeholder="NUS School of Computing Graduation Night 2018">
+      <label for="start">Start date</label>
+      <input id="start" type="datetime-local" placeholder="7 July 2018, 6:00PM">
+      <label for="stop">End date</label>
+      <input id="stop" type="datetime-local" placeholder="8 July 2018, 1:00AM">
+      <label for="hash">Hashtag</label>
+      <input id="hash" type="text" placeholder="#SoCGradNight18">
     </div>
-    <paper-button raised>
+    <paper-button on-click="handleClickAddEvent" raised>
       <iron-icon icon="add"></iron-icon>
       Add event
     </paper-button>
@@ -79,6 +91,28 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     class AddEventPage extends Polymer.Element {
       static get is() {
         return 'add-event-page';
+      }
+
+      handleClickAddEvent() {
+        const name = this.shadowRoot.getElementById("name").value;
+        const start = this.shadowRoot.getElementById("start").value;
+        const stop = this.shadowRoot.getElementById("stop").value;
+        const hash = this.shadowRoot.getElementById("hash").value;
+        createEvent(name, start, stop, hash, function(res) {
+          if (res.ok) {
+            window.history.pushState({}, null, '/event/'+hash);
+            window.dispatchEvent(new CustomEvent('location-changed'));
+          }
+          else {
+            console.log('failed')
+            res.json().then(function(res){
+              if (res.error.name==="SequelizeUniqueConstraintError") {
+                console.log('hashtag taken')
+              }
+            })
+          }
+        })
+        ;
       }
     }
 

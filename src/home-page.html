@@ -53,14 +53,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </style>
     <div class="main">
       <description-card></description-card>
-      <div class="add-event-container">
-        <paper-button on-click="handleClickAddEvent" raised>
-          <iron-icon icon="add"></iron-icon>
-          Add event
-        </paper-button>
-      </div>
     </div>
     <events-near-you></events-near-you>
+    <div class="add-event-container">
+      <h1>Hosting an event?</h1>
+      <paper-button on-click="handleClickAddEvent" raised>
+        Login with facebook
+      </paper-button>
+      <paper-button on-click="handleClickAddEvent" raised>
+        <iron-icon icon="add"></iron-icon>
+        Add event
+      </paper-button>
+    </div>
   </template>
 
   <script>
