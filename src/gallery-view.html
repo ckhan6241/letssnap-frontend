@@ -9,7 +9,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
-<link rel="import" href="../bower_components/app-layout/app-grid/app-grid-style.html">
 <link rel="import" href="../bower_components/iron-label/iron-label.html">
 <link rel="import" href="../bower_components/iron-icon/iron-icon.html">
 <link rel="import" href="../bower_components/iron-icons/image-icons.html">
@@ -19,7 +18,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <dom-module id="gallery-view">
   <template>
-    <style include="app-grid-style"></style>
     <style include="shared-styles">
       :host {
         display: flex;
@@ -33,12 +31,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         padding: 0px;
         list-style: none;
         width: 100%;
-        width: auto;
+        display: flex;
+        flex-wrap: wrap;
       }
 
       li {
         padding: 0px;
         margin: 0px;
+        width: calc((100vw - 20px)/3);
+        height: calc((100vw - 20px)/3);
       }
 
       paper-icon-button {
@@ -58,13 +59,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         flex-shrink: 1;
       }
 
-      .app-grid {
-        --app-grid-columns: 3;
-        --app-grid-item-height: 100%;
-        --app-grid-gutter: 3px;
-        margin-top: 0px;
-      }
-
       footer {
         padding: 10px;
       }
@@ -82,7 +76,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     </style>
     <div class="gallery">
-      <ul class="app-grid" has-aspect-ratio>
+      <ul>
         <template is="dom-repeat" items="{{images}}" as="image">
           <li>
             <single-image index="{{index}}" url="{{image.url}}" is-selected="{{image.isSelected}}"

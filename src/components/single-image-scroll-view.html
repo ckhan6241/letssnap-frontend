@@ -2,37 +2,23 @@
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../../bower_components/iron-icons/social-icons.html">
 <link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../bower_components/iron-image/iron-image.html">
 <link rel="import" href="../shared-styles.html">
 
 <dom-module id="single-image-scroll-view">
   <template>
     <style include="shared-styles">
-      :host {
-        height: 100%;
-      }
-
       .container {
-        height: 100%;
-      }
-
-      paper-icon-button {
-        background: white;
-        color: black;
-        -webkit-border-radius: 50%;
-        -moz-border-radius: 50%;
-        border-radius: 50%;
-        width: 56px;
-        height: 56px;
+        display: flex;
+        flex-direction: column;
       }
 
       .button-group {
-        top: 87%;
         display: flex;
         justify-content: flex-end;
         width: 100%;
-        position: absolute;
         background-color: var(--background-color);
-        height: 13%;
+        height: 42px;
       }
 
       paper-icon-button {
@@ -41,13 +27,16 @@
         background-color: var(--background-color);
       }
 
-      img {
+      iron-image {
         width: 100%;
+        height: 100vw;
+        --iron-image-width: 100%;
+        background-color: lightgrey;
       }
 
     </style>
     <div class="container" id="{{_generateId(index)}}">
-      <img src="{{url}}"/>
+      <iron-image preload fade src="{{url}}"></iron-image>
       <div class="button-group">
         <paper-icon-button icon="social:share"></paper-icon-button>
         <paper-icon-button icon="icons:file-download"></paper-icon-button>

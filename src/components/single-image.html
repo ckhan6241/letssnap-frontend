@@ -1,5 +1,6 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/iron-image/iron-image.html">
 
 <dom-module id="single-image">
   <template>
@@ -16,15 +17,19 @@
         background: white;
       }
 
-      img {
-        width: 100%;
+      iron-image {
+        width: calc(100% - 4px);
+        height: calc(100% - 4px);
+        --iron-image-width: 100%;
+        border: 2px solid var(--background-color);
+        background-color: lightgrey;
       }
 
-      img.isSelected {
+      iron-image.isSelected {
         border: 2px solid red;
       }
     </style>
-    <paper-button flat><img class$={{getClass(isSelected)}} src="{{url}}"></paper-button>
+    <paper-button flat><iron-image preload fade class$={{getClass(isSelected)}} src="{{url}}"></paper-button>
   </template>
 
   <script>
@@ -110,6 +115,7 @@
         this.addEventListener('touchend', this.handleTouchEnd.bind(this));
         this.addEventListener('touchmove', this.handleTouchMove.bind(this));
         this.addEventListener('contextmenu', this.handleContextMenu.bind(this));
+        console.log(this.shadowRoot.getElementById('paper-button'));
       }
     }
 
