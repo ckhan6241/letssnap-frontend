@@ -82,6 +82,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       ready() {
         super.ready();
+        console.log(this.route, this.rootPath);
         if (navigator.geolocation) { // check if browser supports geolocation
           navigator.geolocation.watchPosition(function (position) {
               // success
@@ -136,11 +137,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
       _routePageChanged(page) {
+        if (page === 'facebook') return;
         this.page = page || 'home';
       }
 
       _pageChanged(page) {
         if (page === 'facebook') {
+          console.log('in facebook')
+          window.dispatchEvent(new CustomEvent('location-changed'));
           return;
         }
         var resolvedPageUrl = this.resolveUrl(page + '-page.html');
