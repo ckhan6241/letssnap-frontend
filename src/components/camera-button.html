@@ -33,7 +33,7 @@
     <iron-ajax
       id="photoUpload"
       method="POST"
-      url="https://www.letssnap.tk/photos"
+      url="https://www.letssnap-backend.tk/photos"
       body='{"file": "{{file}}", "ext": "{{ext}}", "hash": "{{hash}}"}'
       handle-as="json"
       on-response="_handlePhotoUploadResponse"
@@ -62,7 +62,7 @@
         formData.append("hash", this.hash)
 
         var request = new XMLHttpRequest();
-        request.open("POST", "https://www.letssnap.tk/photos");
+        request.open("POST", "https://www.letssnap-backend.tk/photos");
         request.send(formData);
       },
 

@@ -1,4 +1,4 @@
-const BASE_URL = 'https://www.letssnap.tk'
+const BASE_URL = 'https://www.letssnap-backend.tk'
 const GROUPS_URL = BASE_URL + '/groups'
 const LOGIN_URL = BASE_URL + '/facebook'
 
