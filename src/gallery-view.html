@@ -84,7 +84,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <div class="button-group">
       <paper-button on-click="_handleClickClearSelection" disabled="{{!isSelecting}}" flat>Clear Selection</paper-button>
       <paper-button disabled="{{!isSelecting}}" flat>Share</paper-button>
-      <paper-button disabled="{{!isSelecting}}" flat>Download</paper-button>
+      <paper-button on-click="_handleClickDownload" disabled="{{!isSelecting}}" flat>Download</paper-button>
     </div>
     <footer>
       <camera-button hash="{{hashtag}}">
@@ -93,6 +93,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   </template>
 
   <script>
+
+    function saveFile(url) {
+      var filename = url.substring(url.lastIndexOf("/") + 1).split("?")[0];
+      var xhr = new XMLHttpRequest();
+      xhr.responseType = 'blob';
+      xhr.onload = function() {
+        var a = document.createElement('a');
+        a.href = window.URL.createObjectURL(xhr.response); // xhr.response is a blob
+        a.download = filename; // Set the file name.
+        a.style.display = 'none';
+        a.target = '_blank';
+        document.body.appendChild(a);
+        a.click();
+        delete a;
+      };
+      xhr.open('GET', url);
+      xhr.send();
+    }
+
     class GalleryView extends Polymer.Element {
       static get is() {
         return 'gallery-view';
@@ -130,6 +149,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         console.log(e);
         window.history.pushState({}, null, '/event/'+this.hashtag+'/'+e.detail.index);
         window.dispatchEvent(new CustomEvent('location-changed'));
+      }
+
+      _handleClickDownload() {
+        _.filter(this.images, i => i.isSelected).map(i=>saveFile(i.url))
+        this._handleClickClearSelection();
       }
 
       static get properties() {
