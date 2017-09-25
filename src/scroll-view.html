@@ -93,12 +93,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             type: String,
             notify: true,
           },
-          images: {
-            type: Array,
-            value: _.range(50).map(function (x, i) {
-              return {'url': 'https://unsplash.it/500/500/?image=' + i, 'isSelected': false, 'index': i};
-            }),
-          },
+          images: Array,
           selectedImages: {
             type: Array,
             value: [],
