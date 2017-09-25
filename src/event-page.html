@@ -11,6 +11,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../bower_components/app-route/app-location.html">
 <link rel="import" href="../bower_components/app-route/app-route.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="./gallery-view.html">
 <link rel="import" href="./scroll-view.html">
 <link rel="import" href="./components/page-header.html">
@@ -53,12 +54,27 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <scroll-view focus-index="{{index}}"></scroll-view>
       </template>
     </div>
+
+    <iron-ajax
+      id="getGroupPhotos"
+      method="GET"
+      url="{{backendGetImagesRoute}}"
+      on-response="_handleGetGroupPhotosResponse"
+    >
+    </iron-ajax>
   </template>
 
   <script>
     class EventPage extends Polymer.Element {
       static get is() {
         return 'event-page';
+      }
+
+      ready() {
+        super.ready();
+        this.backendGetImagesRoute = "https://www.letssnap-backend.tk/groups/" + this.routeData.hashtag;
+        console.log("sending GET requst to the route: ", this.backendGetImagesRoute);
+        this.$.getGroupPhotos.generateRequest();
       }
 
       connectedCallback() {
@@ -80,7 +96,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           routeData: Object,
           subroute: Object,
           subrouteData: Object,
-          rootPath: String
+          rootPath: String,
+          images: Array,
+          backendGetImagesRoute: String
         };
       }
 
@@ -96,6 +114,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       _prepareHashtag(hashtag) {
         return '#' + hashtag;
+      }
+
+      _handleGetGroupPhotosResponse(e) {
+        var photosArray = e.detail.response.success.photos;
+        var arrSize = photosArray.length;
+        console.log("No. of photos: ", arrSize);
+        this.images = _.range(arrSize).map(function (x, i) {
+          console.log('current index ', i);
+          return {'url': photosArray[i].link, 'isSelected': false};
+        })
+        console.log("images property: ",this.images);
       }
     }
 
