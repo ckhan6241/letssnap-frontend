@@ -39,12 +39,31 @@
       <iron-image preload fade src="{{url}}"></iron-image>
       <div class="button-group">
         <paper-icon-button icon="social:share"></paper-icon-button>
-        <paper-icon-button icon="icons:file-download"></paper-icon-button>
+        <paper-icon-button on-click="downloadImage" icon="icons:file-download"></paper-icon-button>
       </div>
     </div>
   </template>
 
   <script>
+
+    function saveFile(url) {
+      var filename = url.substring(url.lastIndexOf("/") + 1).split("?")[0];
+      var xhr = new XMLHttpRequest();
+      xhr.responseType = 'blob';
+      xhr.onload = function() {
+        var a = document.createElement('a');
+        a.href = window.URL.createObjectURL(xhr.response); // xhr.response is a blob
+        a.download = filename; // Set the file name.
+        a.style.display = 'none';
+        a.target = '_blank';
+        document.body.appendChild(a);
+        a.click();
+        delete a;
+      };
+      xhr.open('GET', url);
+      xhr.send();
+    }
+
     class SingleImageScrollView extends Polymer.Element {
       static get is() {
         return 'single-image-scroll-view';
@@ -60,8 +79,9 @@
         }
       }
 
-      attached() {
-        console.log('attached');
+      downloadImage() {
+        console.log('download');
+        saveFile(this.url);
       }
 
       static get properties() {

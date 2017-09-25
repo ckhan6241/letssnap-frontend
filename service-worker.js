@@ -35,7 +35,6 @@ self.addEventListener('activate', function(e) {
 });
 
 self.addEventListener('fetch', function(event) {
-  console.log('[Service Worker] Fetch', event.request.url);
   var backendUrl = 'https://www.letssnap-backend.tk';
   var tempPhotoSource = 'https://unsplash.it';
   if (event.request.url.indexOf(backendUrl) > -1 || event.request.url.indexOf(tempPhotoSource) > -1) {
