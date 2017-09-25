@@ -48,10 +48,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <page-header title="{{_prepareHashtag(routeData.hashtag)}}" show-back-button="true"></page-header>
     <div class="page-body">
       <template is="dom-if" if="{{!index}}">
-        <gallery-view hashtag="{{routeData.hashtag}}"></gallery-view>
+        <gallery-view hashtag="{{routeData.hashtag}}" images={{images}}></gallery-view>
       </template>
       <template is="dom-if" if="{{index}}">
-        <scroll-view focus-index="{{index}}"></scroll-view>
+        <scroll-view focus-index="{{index}}" images="{{images}}"></scroll-view>
       </template>
     </div>
 
