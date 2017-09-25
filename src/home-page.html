@@ -75,6 +75,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       static get is() {
         return 'home-page';
       }
+
+      connectedCallback() {
+        super.connectedCallback();
+        ga(function(){ga('send', 'pageview', '/home')})
+      }
     }
 
     window.customElements.define(HomePage.is, HomePage);

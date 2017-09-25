@@ -100,6 +100,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.shadowRoot.getElementById('stop').value = currTime;
       }
 
+      connectedCallback() {
+        super.connectedCallback();
+        ga(function(){ga('send', 'pageview', '/add-event')});
+      }
+
       handleClickAddEvent() {
         const name = this.shadowRoot.getElementById("name").value;
         const start = this.shadowRoot.getElementById("start").value;

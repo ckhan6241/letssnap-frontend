@@ -61,6 +61,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         return 'event-page';
       }
 
+      connectedCallback() {
+        super.connectedCallback();
+        ga(function(){
+          ga('send', 'pageview', '/event/');
+          ga('send', 'pageview', '/event/'+this.hashtag);
+        });
+      }
+
       static get properties() {
         return {
           index: {
