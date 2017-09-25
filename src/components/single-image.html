@@ -18,9 +18,8 @@
       }
 
       iron-image {
-        width: calc(100% - 4px);
-        height: calc(100% - 4px);
-        --iron-image-width: 100%;
+        width: calc((100vw - 20px)/3);
+        height: calc((100vw - 20px)/3);
         border: 2px solid var(--background-color);
         background-color: lightgrey;
       }
@@ -29,7 +28,7 @@
         border: 2px solid red;
       }
     </style>
-    <paper-button flat><iron-image preload fade class$={{getClass(isSelected)}} src="{{url}}"></paper-button>
+    <paper-button flat><iron-image sizing="cover" preload fade class$={{getClass(isSelected)}} src="{{url}}"></paper-button>
   </template>
 
   <script>
