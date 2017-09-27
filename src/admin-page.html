@@ -47,7 +47,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <div>Your Past events</div>
       <ul>
         <template is="dom-repeat" items="{{pastEvents}}" as="event">
-          <li>{{event.hashtag}}</li>
+          <li>{{event}}</li>
         </template>
       </ul>
       <template is="dom-if" if="_hasNoPastEvents(pastEvents)">
@@ -115,8 +115,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           pastEvents: {
             type: Array,
             value: []
-          },
-          hello: String
+          }
         };
       }
 
