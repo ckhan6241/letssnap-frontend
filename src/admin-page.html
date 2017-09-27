@@ -77,21 +77,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         return 'admin-page';
       }
 
-      // ready() {
-      //   super.ready();
-        // this.pastEvents = [];
-        // this.getRequest().then(function(response) {
-        //   //console.log("response from promise: ", response);
-        //   var index;
-        //   for (index = 0; index < response.success.length; index++) {
-        //     this.pastEvents.push(response.success[index]);
-        //     console.log(this.pastEvents[index]);
-        //   }
-        // }, function(error) {
-        //   console.error("failed", error);
-        // })
-      // }
-
       ready() {
         super.ready();
         // Return a new promise
@@ -118,11 +103,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           };
           req.send();
         });
-        // var index;
-        // for (index = 0; index < jsonResp.success.length; index++) {
-        //   this.pastEvents.push(jsonResp.success[index]);
-        //   console.log(this.pastEvents[index]);
-        // }
       }
 
       connectedCallback() {
@@ -141,6 +121,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
       _hasNoPastEvents(pastEvents) {
+        console.log("no past events fn");
         return pastEvents.length === 0;
       }
 
