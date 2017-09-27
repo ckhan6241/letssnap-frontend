@@ -79,22 +79,48 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       ready() {
         super.ready();
-        console.log("admin - ready function");
-        var request = new XMLHttpRequest();
-        request.onreadystatechange = function() {
-          if (this.readyState == 4 && this.status == 200) {
-            var jsonResponse = JSON.parse(this.responseText);
-            var index;
-            for (index = 0; index < jsonResponse.success.length; index++) {
-              var hashtag = "#" + jsonResponse.success[index].hash;
-              this.pastEvents.push(hashtag);
-              console.log("hashtag: ", this.pastEvents[index]);
+        getRequest().then(function(response) {
+          console.log("response from promise: ", response);
+        } function(error) {
+          console.error("failed", error);
+        })
+
+        // console.log("admin - ready function");
+        // var request = new XMLHttpRequest();
+        // request.onreadystatechange = function() {
+        //   if (request.status == 200) {
+        //     var jsonResponse = JSON.parse(this.responseText);
+        //     var index;
+        //     for (index = 0; index < jsonResponse.success.length; index++) {
+        //       var hashtag = "#" + jsonResponse.success[index].hash;
+        //       this.pastEvents.push(hashtag);
+        //       console.log("hashtag: ", this.pastEvents[index]);
+        //     }
+        //   }
+        // }
+        // request.open("GET", "https://www.letssnap-backend.tk/groups", true);
+        // request.withCredentials = true;
+        // request.send(null);
+      }
+
+      function getRequest() {
+        // Return a new promise
+        return new Promise(function(resolve, reject) {
+          var req = new XMLHttpRequest();
+          req.open("GET", "https://www.letssnap-backend.tk/groups", true);
+          req.withCredentials = true;
+
+          req.onload = function() {
+            if (req.status == 200) {
+              var jsonResponse = JSON.parse(req.responseText);
+              resolve(jsonResponse);
             }
-          }
-        }
-        request.open("GET", "https://www.letssnap-backend.tk/groups", true);
-        request.withCredentials = true;
-        request.send(null);
+            else {
+              reject(Error(req.responseText));
+            }
+          };
+          req.send();
+        });
       }
 
       connectedCallback() {
