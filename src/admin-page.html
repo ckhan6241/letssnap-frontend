@@ -60,12 +60,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         Add event
       </paper-button>
     </div>
+
+    <iron-ajax
+      id="getUserGroups"
+      url="https://www.letssnap-backend.tk/groups"
+      method="GET"
+      with-credentials="true"
+      on-response="_handleUserGroupResponse"></iron-ajax>
+
   </template>
 
   <script>
     class AdminPage extends Polymer.Element {
       static get is() {
         return 'admin-page';
+      }
+
+      ready() {
+        this.$.getUserGroups.generateRequest();
       }
 
       connectedCallback() {
@@ -86,6 +98,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       handleClickAddEvent() {
         window.history.pushState({}, null, '/add-event');
         window.dispatchEvent(new CustomEvent('location-changed'));
+      }
+
+      _handleUserGroupResponse(e) {
+        var events = e.detail.response;
+        console.log("groups: ", events);
       }
     }
 
