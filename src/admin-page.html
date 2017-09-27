@@ -87,15 +87,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             var index;
             for (index = 0; index < jsonResponse.success.length; index++) {
               var hashtag = "#" + jsonResponse.success[index].hash;
-              console.log("hashtag: ", hashtag);
+              this.pastEvents.push(hashtag);
+              console.log("hashtag: ", this.pastEvents[index]);
             }
-            console.log("json: ", jsonResponse);
-            // var arrayLength = array.length;
-            // var index;
-            // for (index = 0; index < arrayLength; index++) {
-            //   var hashtag = "#" + array[index].hash;
-            //   console.log('hashtag: ', hashtag);
-            // }
           }
         }
         request.open("GET", "https://www.letssnap-backend.tk/groups", true);
