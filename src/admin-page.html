@@ -77,6 +77,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
       ready() {
+        super.ready();
+        console.log("admin - ready function");
         this.$.getUserGroups.generateRequest();
       }
 
