@@ -79,7 +79,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <label for="stop">End date</label>
       <input id="stop" type="datetime-local">
       <label for="hash">Hashtag</label>
-      <input id="hash" type="text" placeholder="#SoCGradNight18">
+      <input id="hash" type="text" placeholder="SoCGradNight18">
     </div>
     <paper-button on-click="handleClickAddEvent" raised>
       <iron-icon icon="add"></iron-icon>
@@ -122,7 +122,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             console.log('failed')
             res.json().then(function(res){
               if (res.error.name==="SequelizeUniqueConstraintError") {
-                console.log('hashtag taken')
+                console.log('hashtag taken');
+                alert('Hashtag already taken, please choose another one.');
+              } else {
+                alert('Please complete all the fields, we need these information about your event :)');
               }
             })
           }
