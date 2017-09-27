@@ -83,7 +83,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var request = new XMLHttpRequest();
         request.onreadystatechange = function() {
           if (this.readyState == 4 && this.status == 200) {
-            console.log(this.responseText); // debug
+            var array = this.responseText.success;
+            var arrayLength = array.length;
+            var index;
+            for (index = 0; index < arrayLength; index++) {
+              var hashtag = "#" + array[index].hash;
+              console.log('hashtag: ', hashtag);
+            }
           }
         }
         request.open("GET", "https://www.letssnap-backend.tk/groups", true);
