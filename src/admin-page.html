@@ -46,12 +46,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <div class="past-event">
       <div>Your Past events</div>
       <ul>
-        <template is="dom-repeat" items="{{pastEvents}}" as="event">
+        <!-- <template is="dom-repeat" items="{{pastEvents}}" as="event">
           <li>{{event}}</li>
+        </template> -->
+        <template is="dom-repeat" items="{{pastEvents}}" as="event">
+          <single-hashtag hashtag="{{event}}"></single-hashtag>
         </template>
       </ul>
       <template is="dom-if" if="_hasNoPastEvents(pastEvents)">
-        No past events
+        Confusion
       </template>
     </div>
     <div class="add-event-container">
