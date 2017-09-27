@@ -118,7 +118,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       static get properties() {
         return {
-          pastEvents: Array,
+          pastEvents: {
+            type: Array,
+            value: []
+          }
         };
       }
 
