@@ -94,7 +94,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       ready() {
         super.ready();
-        var arr = [];
         // Return a new promise
         const jsonResp = new Promise(function(resolve, reject) {
           var req = new XMLHttpRequest();
@@ -104,7 +103,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           req.onload = function() {
             if (req.status == 200) {
               var jsonResponse = JSON.parse(req.responseText);
-              arr = jsonResponse.success;
+              this.hello = "hi";
+              console.log(this.hello);
               resolve(jsonResponse);
             }
             else {
@@ -114,7 +114,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           req.send();
         });
         console.log("jsonResp: ", jsonResp);
-        console.log("arr: ", arr);
         // var index;
         // for (index = 0; index < jsonResp.success.length; index++) {
         //   this.pastEvents.push(jsonResp.success[index]);
@@ -132,7 +131,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           pastEvents: {
             type: Array,
             value: []
-          }
+          },
+          hello: String
         };
       }
 
