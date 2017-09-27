@@ -79,7 +79,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       ready() {
         super.ready();
-        getRequest().then(function(response) {
+        this.getRequest().then(function(response) {
           console.log("response from promise: ", response);
         }, function(error) {
           console.error("failed", error);
