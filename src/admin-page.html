@@ -112,6 +112,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           req.send();
         });
         console.log("jsonResp: ", jsonResp);
+        var index;
+        for (index = 0; index < jsonResp.success.length; index++) {
+          this.pastEvents.push(jsonResp.success[index]);
+          console.log(this.pastEvents[index]);
+        }
       }
 
       connectedCallback() {
