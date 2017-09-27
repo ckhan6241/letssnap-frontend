@@ -81,26 +81,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         super.ready();
         this.getRequest().then(function(response) {
           console.log("response from promise: ", response);
+          var index;
+          for (index = 0; index < response.success.length; index++) {
+            this.pastEvents.push(response.success[index]);
+            console.log(this.pastEvents[index]);
+          }
         }, function(error) {
           console.error("failed", error);
         })
-
-        // console.log("admin - ready function");
-        // var request = new XMLHttpRequest();
-        // request.onreadystatechange = function() {
-        //   if (request.status == 200) {
-        //     var jsonResponse = JSON.parse(this.responseText);
-        //     var index;
-        //     for (index = 0; index < jsonResponse.success.length; index++) {
-        //       var hashtag = "#" + jsonResponse.success[index].hash;
-        //       this.pastEvents.push(hashtag);
-        //       console.log("hashtag: ", this.pastEvents[index]);
-        //     }
-        //   }
-        // }
-        // request.open("GET", "https://www.letssnap-backend.tk/groups", true);
-        // request.withCredentials = true;
-        // request.send(null);
       }
 
       getRequest() {
