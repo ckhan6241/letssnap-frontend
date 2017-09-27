@@ -72,9 +72,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       ready() {
         super.ready();
-        this.backendGetImagesRoute = "https://www.letssnap-backend.tk/groups/" + this.routeData.hashtag;
-        console.log("sending GET requst to the route: ", this.backendGetImagesRoute);
-        this.$.getGroupPhotos.generateRequest();
+        console.log("hashtag: ", this.routeData.hashtag);
+        console.log("entered ready");
+        this.updatePhotoDisplay();
       }
 
       connectedCallback() {
@@ -83,6 +83,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           ga('send', 'pageview', '/event/');
           ga('send', 'pageview', '/event/'+this.hashtag);
         });
+      }
+
+      updatePhotoDisplay() {
+        this.images = [];
+        console.log('updating photos');
+        this.backendGetImagesRoute = "https://www.letssnap-backend.tk/groups/" + this.routeData.hashtag;
+        console.log("sending GET requst to the route: ", this.backendGetImagesRoute);
+        this.$.getGroupPhotos.generateRequest();
       }
 
       static get properties() {
@@ -104,7 +112,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       static get observers() {
         return [
-          '_indexChanged(subroute.path, subrouteData.index)'
+          '_indexChanged(subroute.path, subrouteData.index)',
+          '_routeDataHashtagChanged(routeData.hashtag)'
         ];
       }
 
@@ -114,6 +123,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       _prepareHashtag(hashtag) {
         return '#' + hashtag;
+      }
+
+      _routeDataHashtagChanged(newHash) {
+        console.log('new hashtag: ', newHash);
+        this.updatePhotoDisplay();
       }
 
       _handleGetGroupPhotosResponse(e) {
