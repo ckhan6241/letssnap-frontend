@@ -79,18 +79,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       ready() {
         super.ready();
-        var responseArr = [];
+        this.pastEvents = [];
         this.getRequest().then(function(response) {
-          console.log("response from promise: ", response);
+          //console.log("response from promise: ", response);
           var index;
           for (index = 0; index < response.success.length; index++) {
-            responseArr.push(response.success[index]);
-            console.log(responseArr[index]);
+            this.pastEvents.push(response.success[index]);
+            console.log(this.pastEvents[index]);
           }
         }, function(error) {
           console.error("failed", error);
         })
-        console.log(responseArr);
       }
 
       getRequest() {
