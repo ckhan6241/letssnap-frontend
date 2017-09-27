@@ -77,8 +77,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         return 'admin-page';
       }
 
-      ready() {
-        super.ready();
+      // ready() {
+      //   super.ready();
         // this.pastEvents = [];
         // this.getRequest().then(function(response) {
         //   //console.log("response from promise: ", response);
@@ -90,9 +90,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         // }, function(error) {
         //   console.error("failed", error);
         // })
-      }
+      // }
 
-      getRequest() {
+      ready() {
+        super.ready();
         // Return a new promise
         const jsonResp = new Promise(function(resolve, reject) {
           var req = new XMLHttpRequest();
