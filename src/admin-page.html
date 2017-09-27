@@ -79,22 +79,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       ready() {
         super.ready();
-        this.pastEvents = [];
-        this.getRequest().then(function(response) {
-          //console.log("response from promise: ", response);
-          var index;
-          for (index = 0; index < response.success.length; index++) {
-            this.pastEvents.push(response.success[index]);
-            console.log(this.pastEvents[index]);
-          }
-        }, function(error) {
-          console.error("failed", error);
+        // this.pastEvents = [];
+        // this.getRequest().then(function(response) {
+        //   //console.log("response from promise: ", response);
+        //   var index;
+        //   for (index = 0; index < response.success.length; index++) {
+        //     this.pastEvents.push(response.success[index]);
+        //     console.log(this.pastEvents[index]);
+        //   }
+        // }, function(error) {
+        //   console.error("failed", error);
         })
       }
 
       getRequest() {
         // Return a new promise
-        return new Promise(function(resolve, reject) {
+        const jsonResp = new Promise(function(resolve, reject) {
           var req = new XMLHttpRequest();
           req.open("GET", "https://www.letssnap-backend.tk/groups", true);
           req.withCredentials = true;
@@ -110,6 +110,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           };
           req.send();
         });
+        console.log("jsonResp: ", jsonResp);
       }
 
       connectedCallback() {
