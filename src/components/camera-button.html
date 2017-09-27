@@ -70,6 +70,8 @@
         var reqBody = this.$.photoUpload.body;
         console.log(reqBody);
         console.log("response from server: ", e.detail.response);
+        alert('Upload successful!');
+        location.reload(true); // refresh page to display newly uploaded photo
       }
     });
   </script>
