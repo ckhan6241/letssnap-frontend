@@ -84,6 +84,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         request.onreadystatechange = function() {
           if (this.readyState == 4 && this.status == 200) {
             var jsonResponse = JSON.parse(this.responseText);
+            var index;
+            for (index = 0; index < jsonResponse.success.length; index++) {
+              var hashtag = "#" + jsonResponse.success[index].hash;
+              console.log("hashtag: ", hashtag);
+            }
             console.log("json: ", jsonResponse);
             // var arrayLength = array.length;
             // var index;
