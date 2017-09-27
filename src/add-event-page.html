@@ -113,24 +113,33 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         if (!this.latlng) {console.log('no lat lon'); return;}
         const lat = this.latlng.lat;
         const lng = this.latlng.lng;
-        createEvent(name, start, stop, hash, lat, lng, function(res) {
-          if (res.ok) {
-            window.history.pushState({}, null, '/event/'+hash);
-            window.dispatchEvent(new CustomEvent('location-changed'));
-          }
-          else {
-            console.log('failed')
-            res.json().then(function(res){
-              if (res.error.name==="SequelizeUniqueConstraintError") {
-                console.log('hashtag taken');
-                alert('Hashtag already taken, please choose another one.');
-              } else {
-                alert('Please complete all the fields, we need these information about your event :)');
-              }
-            })
-          }
-        })
-        ;
+        if (name == "") {
+          alert("Event name is required");
+        } else if (start == "") {
+          alert("Event start date and time is required");
+        } else if (stop == "") {
+          alert("Event end date and time is required");
+        } else if (hash == "") {
+          alert("Event hashtag is required");
+        } else {
+          createEvent(name, start, stop, hash, lat, lng, function(res) {
+            if (res.ok) {
+              console.log("Event created!");
+              window.history.pushState({}, null, '/event/'+hash);
+              window.dispatchEvent(new CustomEvent('location-changed'));
+            }
+            else {
+              console.log('failed')
+              res.json().then(function(res){
+                if (res.error.name==="SequelizeUniqueConstraintError") {
+                  console.log('hashtag taken');
+                  alert('Hashtag already taken, please choose another one.');
+                }
+              })
+            }
+          })
+          ;
+        }
       }
     }
 
