@@ -83,7 +83,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var request = new XMLHttpRequest();
         request.onreadystatechange = function() {
           if (this.readyState == 4 && this.status == 200) {
-            var array = this.responseText.success;
+            var array = this.response;
             console.log(array);
             // var arrayLength = array.length;
             // var index;
