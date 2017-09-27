@@ -80,7 +80,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       ready() {
         super.ready();
         console.log("admin - ready function");
-        this.$.getUserGroups.generateRequest();
+        var request = new XMLHttpRequest();
+        request.onreadystatechange = function() {
+          if (this.readyState == 4 && this.status == 200) {
+            console.log(this.responseText); // debug
+          }
+        }
+        request.open("GET", "https://www.letssnap-backend.tk/groups", true);
+        request.withCredentials = true;
+        request.send(null);
       }
 
       connectedCallback() {
