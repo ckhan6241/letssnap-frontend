@@ -6,7 +6,7 @@ function createEvent(name, start, stop, hash, lat, lng, callback) {
   fetch(GROUPS_URL, {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
-    // credentials: 'include',
+    credentials: 'include',
     body: JSON.stringify({
       name: name,
       start: start,
