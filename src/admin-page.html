@@ -106,7 +106,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               this.pastEvents = [];
               var index;
               for (index = 0; index < jsonResponse.success.length; index++) {
-                this.pastEvents.push(jsonResponse.success[index]);
+                var hashtag = "#" + jsonResponse.success[index].hash;
+                this.pastEvents.push(hashtag);
                 console.log("event: ", this.pastEvents[index]);
               }
               resolve(jsonResponse);
@@ -117,7 +118,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           };
           req.send();
         });
-        console.log("jsonResp: ", jsonResp);
         // var index;
         // for (index = 0; index < jsonResp.success.length; index++) {
         //   this.pastEvents.push(jsonResp.success[index]);
