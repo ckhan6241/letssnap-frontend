@@ -103,8 +103,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           req.onload = function() {
             if (req.status == 200) {
               var jsonResponse = JSON.parse(req.responseText);
-              this.hello = "hi";
-              console.log(this.hello);
+              this.pastEvents = [];
+              var index;
+              for (index = 0; index < jsonResponse.success.length; index++) {
+                this.pastEvents.push(jsonResponse.success[index]);
+                console.console.log("event: ", this.pastEvents[index]);
+              }
               resolve(jsonResponse);
             }
             else {
