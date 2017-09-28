@@ -100,11 +100,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           req.onload = function() {
             if (req.status == 200) {
               var jsonResponse = JSON.parse(req.responseText);
-              this.pastEvents = [];
               var index;
               for (index = 0; index < jsonResponse.success.length; index++) {
                 var hashtag = "#" + jsonResponse.success[index].hash;
-                this.pastEvents.push(hashtag);
+                this.pastEvents = this.pastEvents + hashtag;
                 console.log("event: ", this.pastEvents[index]);
               }
               resolve(jsonResponse);
