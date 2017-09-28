@@ -22,7 +22,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         display: flex;
         flex-direction: column;
         text-align: center;
-        height: 100%;
       }
 
       .main {
@@ -51,7 +50,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
       events-near-you {
-        flex-grow: 1;
         background-color: #ffe4c6;
         height: 50%;
       }
@@ -60,7 +58,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <div class="main">
       <description-card></description-card>
     </div>
-    <events-near-you events="{{events}}" is-loading="{{isLoading}}"></events-near-you>
+    <events-near-you events="{{events}}" is-loading="{{isLoading}}" is-geo-enabled="{{isGeoEnabled}}" ask-location="{{askLocation}}"></events-near-you>
     <div class="add-event-container">
       <h1>Hosting an event?</h1>
         <paper-button raised>

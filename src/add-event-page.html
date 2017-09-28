@@ -67,6 +67,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         margin: 10px;
       }
 
+      paper-button[disabled] {
+        background-color: grey;
+      }
+
+      p {
+        font-size: var(--small-font);
+      }
+
+      a {
+        text-decoration: underline;
+        color: blue;
+      }
+
     </style>
     <page-header show-back-button="true" to="/admin"></page-header>
     <img src="../images/logo-v6.png">
@@ -81,10 +94,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <label for="hash">Hashtag</label>
       <input id="hash" type="text" placeholder="SoCGradNight18">
     </div>
-    <paper-button on-click="handleClickAddEvent" raised>
+    <paper-button on-click="handleClickAddEvent" raised disabled="{{askLocation}}">
       <iron-icon icon="add"></iron-icon>
       Add event
     </paper-button>
+    <template is="dom-if" if="{{askLocation}}">
+      <p>Location service is needed to create event. Enable it <a on-click="_handleClickEnableService">here</a></p>
+    </template>
   </template>
 
   <script>
@@ -93,11 +109,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         return 'add-event-page';
       }
 
+      static get properties() {
+        return {
+          askLocation: Boolean,
+        }
+      }
+
       ready() {
         super.ready();
         const currTime = moment().format('YYYY-MM-DDTHH:mm');
         this.shadowRoot.getElementById('start').value = currTime;
         this.shadowRoot.getElementById('stop').value = currTime;
+      }
+
+      _handleClickEnableService() {
+        window.dispatchEvent(new CustomEvent('enablelocation'));
       }
 
       connectedCallback() {

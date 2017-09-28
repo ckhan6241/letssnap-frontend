@@ -110,9 +110,9 @@
 
       ready() {
         super.ready();
-        this.addEventListener('touchstart', this.handleTouchStart.bind(this));
-        this.addEventListener('touchend', this.handleTouchEnd.bind(this));
-        this.addEventListener('touchmove', this.handleTouchMove.bind(this));
+        this.addEventListener('touchstart', this.handleTouchStart.bind(this), {passive: true});
+        this.addEventListener('touchend', this.handleTouchEnd.bind(this), {passive: true});
+        this.addEventListener('touchmove', this.handleTouchMove.bind(this), {passive: true});
         this.addEventListener('contextmenu', this.handleContextMenu.bind(this));
         console.log(this.shadowRoot.getElementById('paper-button'));
       }

@@ -25,6 +25,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="lazy-import" href="admin-page.html">
 
 <dom-module id="my-app">
+  <link rel="import" type="css" href="../bootstrap.min.css">
   <template>
     <style>
       :host {
@@ -52,7 +53,35 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       iron-pages {
         height: 100vh;
       }
+      .modal {
+        z-index: 9000;
+        background: none;
+        height: 100vh;
+        display: flex;
+        position: fixed;
+        left: 0px;
+        top: 0px !important;
+      }
 
+      .modal.fade.in {
+        display: flex !important;
+        align-items: center;
+      }
+
+      .modal.fade {
+        -webkit-transition: all 0.4s ease-out;
+        transition: all 0.4s ease-out;
+      }
+
+      .modal-backdrop {
+        background-color: #F2F5F7;
+        z-index: 8999;
+        display: none;
+      }
+      .modal-backdrop.in {
+        opacity: .95;
+        display: block;
+      }
     </style>
 
     <app-location route="{{route}}" url-space-regex="^[[rootPath]]"></app-location>
@@ -67,11 +96,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         attr-for-selected="name"
         fallback-selection="home"
         role="main">
-      <home-page name="home" latlng="{{latlng}}" events="{{events}}" is-loading="{{isLoading}}"></home-page>
+      <home-page name="home" latlng="{{latlng}}" events="{{events}}" is-loading="{{isLoading}}" is-geo-enabled="{{!message}}" ask-location="{{askLocation}}"></home-page>
       <event-page name="event"></event-page>
-      <add-event-page name="add-event" latlng="{{latlng}}"></add-event-page>
-      <admin-page name="admin"></admin-page>
+      <add-event-page name="add-event" latlng="{{latlng}}" ask-location="{{askLocation}}"></add-event-page>
+      <admin-page name="admin" is-geo-enabled="{{!message}}"></admin-page>
     </iron-pages>
+    <div id="dim-background" class$="{{_getDimBackgroundClass(showPopup)}}"></div>
+    <div class$="{{_getModalClass(showPopup)}}" id="modal-work03" tabIndex="-1" role="dialog" aria-labelledby="modal-work03" aria-hidden="true">
+      <div class="modal-dialog modal-xs">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><paper-icon-button on-click="handleClosePopup" icon="icons:close"></paper-icon-button></span></button>
+            {{message}}
+          </div>
+        </div>
+      </div>
+    </div>
   </template>
 
   <script>
@@ -80,9 +120,36 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         return 'my-app';
       }
 
+      _getDimBackgroundClass(showPopup) {
+        return showPopup ? "modal-backdrop fade in" : "modal-backdrop fade";
+      }
+
+      _getModalClass(showPopup) {
+        return showPopup ? "modal fade in" : "modal fade";
+      }
+
+      handleClosePopup() {
+        this.showPopup = false;
+      }
+
+      handleOpenPopup() {
+        this.showPopup = true;
+      }
+
       ready() {
         super.ready();
-        console.log(this.route, this.rootPath);
+        const hasAskedLocation = localStorage.hasAskedLocation;
+        if (hasAskedLocation) {
+          this.startLocation();
+        } else {
+          this.askLocation = true;
+          window.addEventListener('enablelocation', this.startLocation.bind(this));
+        }
+      }
+
+      startLocation() {
+        localStorage.hasAskedLocation = true;
+        this.askLocation = false;
         if (navigator.geolocation) { // check if browser supports geolocation
           navigator.geolocation.watchPosition(function (position) {
               // success
@@ -96,13 +163,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             }.bind(this), function (error) {
               switch (error.code) {
                 case error.PERMISSION_DENIED:
-                  console.log('Permission denied');
+                  this.message = "Location is disabled, please allow location service"
                   break;
                 case error.POSITION_UNAVAILABLE:
-                  console.log('Position unavailable');
+                  this.message = "Location service is not available, please try again later"
                   break;
                 case error.TIMEOUT:
-                  console.log('Timeout');
+                  this.message = "Location service is not available, please try again later"
                   break;
               }
             }.bind(this)
@@ -131,15 +198,29 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           isLoading: {
             type: Boolean,
             value: true,
-          }
+          },
+          showPopup: {
+            type: Boolean,
+            value: false
+          },
+          message: {
+            type: String,
+            value: ""
+          },
+          askLocation: Boolean
         };
       }
 
       static get observers() {
         return [
           '_routePageChanged(routeData.page)',
-          '_locationChanged(latlng)'
+          '_locationChanged(latlng)',
+          '_messageReceived(message)'
         ];
+      }
+
+      _messageReceived(message) {
+        this.showPopup = message !== '';
       }
 
       _locationChanged(latlng) {
