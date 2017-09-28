@@ -24,7 +24,7 @@
     <p>Tap to join!</p>
     <div class="event-container">
       <template is="dom-repeat" items="{{events}}" as="event">
-        <single-hashtag hashtag="{{event.hashtag}}"></single-hashtag>
+        <single-hashtag hashtag="{{event.hash}}"></single-hashtag>
       </template>
     </div>
   </template>
@@ -39,17 +39,6 @@
         return {
           events: {
             type: Array,
-            value: [
-              {
-                hashtag: '#ComputingIFG2017',
-              },
-              {
-                hashtag: '#DataScienceChallenge17',
-              },
-              {
-                hashtag: '#NUSRecessWeekParty'
-              },
-            ],
           },
         };
       }
