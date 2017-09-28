@@ -146,8 +146,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       ready() {
         super.ready();
-        window.addEventListener('imageclicked', this._imageClicked.bind(this));
-        window.addEventListener('imageselection', this._imageSelection.bind(this));
+        window.addEventListener('imageclicked', this._imageClicked.bind(this), {passive: true});
+        window.addEventListener('imageselection', this._imageSelection.bind(this), {passive: true});
       }
 
       _imageClicked(e) {

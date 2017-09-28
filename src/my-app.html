@@ -23,12 +23,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="lazy-import" href="event-page.html">
 <link rel="lazy-import" href="add-event-page.html">
 <link rel="lazy-import" href="admin-page.html">
+<link rel="import" type="css" href="../bootstrap.min.css">
 
 
 <script src="./api.js"></script>
 
 <dom-module id="my-app">
-  <link rel="import" type="css" href="../bootstrap.min.css">
   <template>
     <style>
       :host {
@@ -152,7 +152,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           this.startLocation();
         } else {
           this.askLocation = true;
-          window.addEventListener('enablelocation', this.startLocation.bind(this));
+          window.addEventListener('enablelocation', this.startLocation.bind(this), {passive: true});
         }
       }
 
