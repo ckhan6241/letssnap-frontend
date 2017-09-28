@@ -5,7 +5,9 @@ var urlsToCache = [
   '/node_modules/lodash/lodash.min.js',
   '/node_modules/moment/moment.js',
   '/src/',
-  '/manifest.json'
+  '/manifest.json',
+  '/images/',
+  '/bootstrap.min.css',
 ];
 
 self.addEventListener('install', function(event) {
@@ -35,9 +37,8 @@ self.addEventListener('activate', function(e) {
 });
 
 self.addEventListener('fetch', function(event) {
-  var backendUrl = 'https://www.letssnap-backend.tk';
-  var tempPhotoSource = 'https://unsplash.it';
-  if (event.request.url.indexOf(backendUrl) > -1 || event.request.url.indexOf(tempPhotoSource) > -1) {
+  var backendUrl = 'https://s3-ap-southeast-1.amazonaws.com/letssnap';
+  if (event.request.url.indexOf(backendUrl) > -1) {
     event.respondWith(
       caches.open(DATA_CACHE_NAME).then(function(cache) {
         return fetch(event.request).then(function(response){

@@ -96,10 +96,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         attr-for-selected="name"
         fallback-selection="home"
         role="main">
-      <home-page name="home" latlng="{{latlng}}" events="{{events}}" is-loading="{{isLoading}}" is-geo-enabled="{{!message}}"></home-page>
+      <home-page name="home" latlng="{{latlng}}" events="{{events}}" is-loading="{{isLoading}}" is-geo-enabled="{{!message}}" ask-location="{{askLocation}}"></home-page>
       <event-page name="event"></event-page>
-      <add-event-page name="add-event" latlng="{{latlng}}"></add-event-page>
-      <admin-page name="admin" is-geo-enabled="{{!message}}></admin-page>
+      <add-event-page name="add-event" latlng="{{latlng}}" ask-location="{{askLocation}}"></add-event-page>
+      <admin-page name="admin" is-geo-enabled="{{!message}}"></admin-page>
     </iron-pages>
     <div id="dim-background" class$="{{_getDimBackgroundClass(showPopup)}}"></div>
     <div class$="{{_getModalClass(showPopup)}}" id="modal-work03" tabIndex="-1" role="dialog" aria-labelledby="modal-work03" aria-hidden="true">
@@ -138,7 +138,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       ready() {
         super.ready();
-        console.log(this.route, this.rootPath);
+        const hasAskedLocation = localStorage.hasAskedLocation;
+        if (hasAskedLocation) {
+          this.startLocation();
+        } else {
+          this.askLocation = true;
+          window.addEventListener('enablelocation', this.startLocation.bind(this));
+        }
+      }
+
+      startLocation() {
+        localStorage.hasAskedLocation = true;
+        this.askLocation = false;
         if (navigator.geolocation) { // check if browser supports geolocation
           navigator.geolocation.watchPosition(function (position) {
               // success
@@ -195,7 +206,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           message: {
             type: String,
             value: ""
-          }
+          },
+          askLocation: Boolean
         };
       }
 
