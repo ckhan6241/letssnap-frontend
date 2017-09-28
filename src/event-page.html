@@ -136,7 +136,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         console.log("No. of photos: ", arrSize);
         this.images = _.range(arrSize).map(function (x, i) {
           console.log('current index ', i);
-          return {'url': photosArray[i].link, 'isSelected': false};
+          return {'url': photosArray[i].link, 'isSelected': false, 'index': i};
         })
         console.log("images property: ",this.images);
       }
