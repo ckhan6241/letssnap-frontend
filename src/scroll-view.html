@@ -10,11 +10,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="./components/single-image-scroll-view.html">
-<link rel="import" href="shared-styles.html">
 
 <dom-module id="scroll-view">
   <template>
-    <style include="shared-styles">
+    <style>
       :host {
         display: flex;
         flex-direction: column;
@@ -61,6 +60,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       img {
         width: 100%;
+      }
+
+      h1 {
+        margin: 16px 0;
+        color: #212121;
+        font-size: 22px;
       }
 
     </style>

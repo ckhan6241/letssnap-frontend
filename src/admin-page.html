@@ -11,15 +11,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="./components/page-header.html">
 <link rel="import" href="../bower_components/paper-button/paper-button.html">
-<link rel="import" href="shared-styles.html">
 
 <dom-module id="admin-page">
   <template>
-    <style include="shared-styles">
+    <style>
       :host {
         display: flex;
         flex-direction: column;
         height: 100vh;
+      }
+
+      h1 {
+        margin: 16px 0;
+        color: #212121;
+        font-size: 22px;
       }
 
       page-header {

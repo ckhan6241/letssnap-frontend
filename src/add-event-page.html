@@ -12,14 +12,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="./components/page-header.html">
-<link rel="import" href="shared-styles.html">
+<script src="../node_modules/moment/moment.js"></script>
+<script src="../api.js"></script>
 
 <dom-module id="add-event-page">
   <template>
-    <style include="shared-styles">
+    <style>
       :host {
         display: block;
         text-align: center;
+      }
+
+      h1 {
+        margin: 16px 0;
+        color: #212121;
+        font-size: 22px;
       }
 
       page-header {

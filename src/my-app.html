@@ -24,6 +24,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="lazy-import" href="add-event-page.html">
 <link rel="lazy-import" href="admin-page.html">
 
+
+<script src="./api.js"></script>
+
 <dom-module id="my-app">
   <link rel="import" type="css" href="../bootstrap.min.css">
   <template>
@@ -48,6 +51,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       app-header paper-icon-button {
         --paper-icon-button-ink-color: white;
+      }
+
+      h1 {
+        margin: 16px 0;
+        color: #212121;
+        font-size: 22px;
       }
 
       iron-pages {
