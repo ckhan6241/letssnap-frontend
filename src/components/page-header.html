@@ -42,13 +42,19 @@
       static get properties() {
         return {
           showBackButton: Boolean,
-          title: String
+          title: String,
+          to: String,
         }
       }
 
       handleClickBackButton() {
-        console.log('going back');
-        window.history.back();
+        if (this.to) {
+          console.log(this.to);
+          window.history.pushState({}, null, this.to);
+          window.dispatchEvent(new CustomEvent('location-changed'));
+        } else {
+          window.history.back();
+        }
       }
     }
 
