@@ -91,21 +91,30 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       ready() {
         super.ready();
-        var req = new XMLHttpRequest();
-        req.open("GET", "https://www.letssnap-backend.tk/groups", true);
-        req.withCredentials = true;
+        // Return a new promise
+        const jsonResp = new Promise(function(resolve, reject) {
+          var req = new XMLHttpRequest();
+          req.open("GET", "https://www.letssnap-backend.tk/groups", true);
+          req.withCredentials = true;
 
-        req.onload = function() {
-          var jsonResponse = JSON.parse(req.responseText);
-          this.pastEvents = [];
-          var index;
-          for (index = 0; index < jsonResponse.success.length; index++) {
-            var hashtag = "#" + jsonResponse.success[index].hash;
-            this.pastEvents.push(hashtag);
-            console.log("event: ", this.pastEvents[index]);
-          }
-        }.bind(this);
-        req.send();
+          req.onload = function() {
+            if (req.status == 200) {
+              var jsonResponse = JSON.parse(req.responseText);
+              this.pastEvents = [];
+              var index;
+              for (index = 0; index < jsonResponse.success.length; index++) {
+                var hashtag = "#" + jsonResponse.success[index].hash;
+                this.pastEvents.push(hashtag);
+                console.log("event: ", this.pastEvents[index]);
+              }
+              resolve(jsonResponse);
+            }
+            else {
+              reject(Error(req.responseText));
+            }
+          }.bind(this);
+          req.send();
+        }.bind(this));
       }
 
       connectedCallback() {
