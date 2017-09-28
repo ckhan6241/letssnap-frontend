@@ -28,7 +28,7 @@
       }
 
       handleClickHashtag(e) {
-        window.history.pushState({}, null, '/event/' + this.hashtag.slice(1));
+        window.history.pushState({}, null, '/event/' + this.hashtag);
         window.dispatchEvent(new CustomEvent('location-changed'));
       }
     }

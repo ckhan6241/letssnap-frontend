@@ -50,7 +50,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
       iron-pages {
-        height: 100%;
+        height: 100vh;
       }
 
     </style>
@@ -67,7 +67,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         attr-for-selected="name"
         fallback-selection="home"
         role="main">
-      <home-page name="home" latlng="{{latlng}}"></home-page>
+      <home-page name="home" latlng="{{latlng}}" events="{{events}}" is-loading="{{isLoading}}"></home-page>
       <event-page name="event"></event-page>
       <add-event-page name="add-event" latlng="{{latlng}}"></add-event-page>
       <admin-page name="admin"></admin-page>
@@ -127,13 +127,29 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           subrouteData: Object,
           subroute: Object,
           rootPath: String,
+          events: Array,
+          isLoading: {
+            type: Boolean,
+            value: true,
+          }
         };
       }
 
       static get observers() {
         return [
           '_routePageChanged(routeData.page)',
+          '_locationChanged(latlng)'
         ];
+      }
+
+      _locationChanged(latlng) {
+        console.log('location changed');
+        searchEvents(this.latlng.lat, this.latlng.lng, res=>{
+          res.json().then(res=>{
+          this.events = res;
+          this.isLoading = false;
+          })
+        })
       }
 
       _routePageChanged(page) {
