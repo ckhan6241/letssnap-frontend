@@ -103,9 +103,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             else {
               reject(Error(req.responseText));
             }
-          };
+          }.bind(this);
           req.send();
-        });
+        }.bind(this));
       }
 
       connectedCallback() {
