@@ -7,6 +7,7 @@
       :host {
         display: block;
         text-align: center;
+        height: 100%;
       }
 
       .event-container {
@@ -45,6 +46,10 @@
           -webkit-transform: rotate(90deg);
           transform: rotate(90deg); } }
 
+      .noGeolocation {
+        color: red;
+      }
+
     </style>
     <h1>Events near you</h1>
     <p>Tap to join!</p>
@@ -57,12 +62,17 @@
           <p> No events nearby</p>
         </template>
       </template>
-      <template is="dom-if" if="{{isLoading}}">
-        <div class="loader">
-          <svg viewBox="0 0 32 32" width="32" height="32">
-            <circle id="spinner" cx="16" cy="16" r="14" fill="none"></circle>
-          </svg>
-        </div>
+      <template is="dom-if" if="{{!isGeoEnabled}}">
+        <p class="noGeolocation"> Enable location service to find nearby events </p>
+      </template>
+      <template is="dom-if" if="{{isGeoEnabled}}">
+        <template is="dom-if" if="{{isLoading}}">
+          <div class="loader">
+            <svg viewBox="0 0 32 32" width="32" height="32">
+              <circle id="spinner" cx="16" cy="16" r="14" fill="none"></circle>
+            </svg>
+          </div>
+        </template>
       </template>
     </div>
   </template>
@@ -81,11 +91,17 @@
           isLoading: {
             type: Boolean,
           },
+          isGeoEnabled: Boolean,
         };
       }
 
       _noEvent(events) {
         return events.length === 0;
+      }
+
+      ready() {
+        super.ready();
+        console.log(this.isGeoEnabled);
       }
     }
 

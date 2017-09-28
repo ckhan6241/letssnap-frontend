@@ -58,7 +58,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </template>
     </div>
     <div class="add-event-container">
-      <paper-button on-click="handleClickAddEvent" raised>
+      <paper-button on-click="handleClickAddEvent" raised disabled="{{!isGeoEnabled}}">
         <iron-icon icon="add"></iron-icon>
         Add event
       </paper-button>
@@ -118,7 +118,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           pastEvents: {
             type: Array,
             value: []
-          }
+          },
+          isGeoEnabled: Boolean,
         };
       }
 
