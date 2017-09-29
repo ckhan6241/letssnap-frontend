@@ -103,7 +103,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               var jsonResponse = JSON.parse(req.responseText);
               var index;
               for (index = 0; index < jsonResponse.success.length; index++) {
-                var hashtag = "#" + jsonResponse.success[index].hash;
+                var hashtag = jsonResponse.success[index].hash;
                 this._addEvent(hashtag);
               }
               console.log('this.pastEvents array: ', this.pastEvents);
