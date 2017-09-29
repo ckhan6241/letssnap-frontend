@@ -5,7 +5,7 @@ var app = express()
 app.use(express.static(path.join(__dirname, 'build/es6-bundled')))
 
 app.get('/*', function(req, res) {
-	res.sendFile(path.join(__dirname, 'build/es6-bundled') + '/index.html')
+	res.sendFile(path.join(__dirname, 'build/es6-unbundled') + '/index.html')
 })
 
 const server = app.listen(3000, process.env.LETSSNAP_INTERNAL_IP, function() {
