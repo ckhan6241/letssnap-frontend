@@ -106,7 +106,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 var hashtag = "#" + jsonResponse.success[index].hash;
                 events.push(hashtag);
               }
-              this.pastEvents = this.pastEvents + events;
+              this.pastEvents = events;
               console.log(this.pastEvents);
               resolve(jsonResponse);
             }
