@@ -27,7 +27,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       .main {
         display: flex;
         flex-direction: column;
-        min-height: 30%;
+        height: 242px;
+        flex: 0 0 auto;
       }
 
       h1 {
@@ -38,11 +39,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       description-card {
         padding: 10px;
-        min-height: 242px;
+        height: 242px;
       }
 
       .add-event-container {
         padding-bottom: 10px;
+        flex-grow: 1;
+        flex-shrink: 1;
       }
 
       paper-button {
