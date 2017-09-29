@@ -2,7 +2,7 @@ var express = require('express')
 var path = require('path')
 var app = express()
 
-app.use(express.static(path.join(__dirname, 'build/es6-bundled')))
+app.use(express.static(path.join(__dirname, 'build/es6-unbundled')))
 
 app.get('/*', function(req, res) {
 	res.sendFile(path.join(__dirname, 'build/es6-unbundled') + '/index.html')
