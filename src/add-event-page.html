@@ -13,7 +13,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="./components/page-header.html">
 <script src="../node_modules/moment/moment.js"></script>
-<script src="./api.js"></script>
 
 <dom-module id="add-event-page">
   <template>
@@ -111,6 +110,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   </template>
 
   <script>
+
+    function createEvent(name, start, stop, hash, lat, lng, callback) {
+      fetch('https://www.letssnap-backend.tk/groups', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        credentials: 'include',
+        body: JSON.stringify({
+          name: name,
+          start: start,
+          stop: stop,
+          hash: hash,
+          latitude: lat,
+          longitude: lng
+        })
+      }).then(callback)
+    }
+
     class AddEventPage extends Polymer.Element {
       static get is() {
         return 'add-event-page';
