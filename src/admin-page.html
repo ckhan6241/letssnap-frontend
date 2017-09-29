@@ -9,6 +9,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/polymer/lib/elements/dom-if.html">
 <link rel="import" href="./components/page-header.html">
 <link rel="import" href="../bower_components/paper-button/paper-button.html">
 <link rel="import" href="./components/single-hashtag.html">
@@ -63,9 +64,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <single-hashtag hashtag="{{event}}"></single-hashtag><br>
         </template>
       </ul>
-      <!-- <template is="dom-if" if="_hasNoPastEvents">
+      <template is="dom-if" if="_hasNoPastEvents(pastEvents)">
         No past events
-      </template> -->
+      </template>
     </div>
     <div class="add-event-container">
       <paper-button on-click="handleClickAddEvent" raised disabled="{{!isGeoEnabled}}">
@@ -137,13 +138,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         console.log('pushed ', e);
       }
 
-      _hasNoPastEvents() {
+      _hasNoPastEvents(pastEvents) {
         console.log("no past events fn");
-        if (pastEvents.length == 0) {
-          return true;
-        } else {
-          return false;
-        }
+        return pastEvents.length === 0;
       }
 
       handleClickAddEvent() {
