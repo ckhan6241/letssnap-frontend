@@ -101,12 +101,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             if (req.status == 200) {
               var jsonResponse = JSON.parse(req.responseText);
               var index;
-              this.pastEvents = []; // may need to be removed, KIV
+              var events = [];
               for (index = 0; index < jsonResponse.success.length; index++) {
                 var hashtag = "#" + jsonResponse.success[index].hash;
-                this.pastEvents = this.pastEvents.concat(hashtag);
-                console.log("event: ", this.pastEvents[index]);
+                events.push(hashtag);
               }
+              this.pastEvents = this.pastEvents + events;
+              console.log(this.pastEvents);
               resolve(jsonResponse);
             }
             else {
