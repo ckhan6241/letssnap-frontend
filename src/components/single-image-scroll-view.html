@@ -1,6 +1,5 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
-<link rel="import" href="../../bower_components/iron-icons/social-icons.html">
 <link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../../bower_components/iron-image/iron-image.html">
 
@@ -37,7 +36,6 @@
     <div class="container" id="{{_generateId(index)}}">
       <iron-image sizing="cover" preload fade src="{{url}}"></iron-image>
       <div class="button-group">
-        <paper-icon-button icon="social:share"></paper-icon-button>
         <paper-icon-button on-click="downloadImage" icon="icons:file-download"></paper-icon-button>
       </div>
     </div>

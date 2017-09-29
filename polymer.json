@@ -22,7 +22,7 @@
   },
   "builds": [
     {
-      "preset": "es6-unbundled"
+      "preset": "es6-bundled"
     }
   ]
 }
