@@ -1,5 +1,6 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="./single-hashtag.html">
+<link rel="import" href="../../bower_components/polymer/lib/elements/dom-if.html">
 
 <dom-module id="events-near-you">
   <template>
@@ -85,7 +86,7 @@
           <template is="dom-repeat" items="{{events}}" as="event">
             <single-hashtag hashtag="{{event.hash}}"></single-hashtag>
           </template>
-            <template is="dom-if" if="_noEvent(events)">
+            <template is="dom-if" if="{{noEventsNearby}}">
               <p> No events nearby</p>
             </template>
         </template>
@@ -109,13 +110,16 @@
           },
           isGeoEnabled: Boolean,
           askLocation: Boolean,
-          noEventsNearby: true
+          noEventsNearby: {
+            type: Boolean,
+            value: true
+          }
         };
       }
 
       ready() {
         if (events.length != 0) {
-          noEventsNearby = false;
+          this.noEventsNearby = false;
         }
       }
 
