@@ -6,7 +6,6 @@
     <style>
       :host {
         width: 100%;
-        display: block;
         display: flex;
         align-items: center;
         background-color: white;
@@ -27,17 +26,38 @@
         flex-grow: 1;
         text-align: center;
       }
+
+      a {
+        font-size: var(--small-font);
+        color: blue;
+        padding: 10px;
+        text-decoration: underline;
+      }
     </style>
     <template is="dom-if" if="{{showBackButton}}">
       <iron-icon on-click="handleClickBackButton" icon="icons:arrow-back"></iron-icon>
     </template>
     <h1>{{ title }}</h1>
+    <template is="dom-if" if="{{logout}}">
+      <a on-click="_handleLogout">Log out</a>
+    </template>
   </template>
 
   <script>
     class PageHeader extends Polymer.Element {
       static get is() {
         return 'page-header';
+      }
+
+      _handleLogout() {
+        fetch('https://www.letssnap-backend.tk/logout', {
+          method: 'GET',
+          headers: {'Content-Type': 'application/json'},
+          credentials: 'include',
+        }).then(res=>{
+          window.history.pushState({}, null, '/home');
+          window.dispatchEvent(new CustomEvent('location-changed'));
+        })
       }
 
       ready() {
@@ -50,6 +70,7 @@
           showBackButton: Boolean,
           title: String,
           to: String,
+          logout: Boolean,
         }
       }
 
