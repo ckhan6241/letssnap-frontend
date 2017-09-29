@@ -1,6 +1,5 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="./single-hashtag.html">
-<!-- <link rel="import" href="../../bower_components/polymer/lib/elements/dom-if.html"> -->
 
 <dom-module id="events-near-you">
   <template>
@@ -86,9 +85,9 @@
           <template is="dom-repeat" items="{{events}}" as="event">
             <single-hashtag hashtag="{{event.hash}}"></single-hashtag>
           </template>
-            <!-- <template is="dom-if" if="{{noEventsNearby}}">
+            <template is="dom-if" if="_noEvent(events)">
               <p> No events nearby</p>
-            </template> -->
+            </template>
         </template>
       </template>
     </div>
