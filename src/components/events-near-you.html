@@ -119,7 +119,7 @@
 
       ready() {
         super.ready();
-        if (this.events.length != 0) {
+        if (events.length != 0) {
           this.noEventsNearby = false;
         }
       }
@@ -129,7 +129,7 @@
       }
 
       _noEvent(events) {
-        return this.events.length === 0;
+        return events.length === 0;
       }
     }
 
