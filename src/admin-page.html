@@ -55,15 +55,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <page-header title="Manage your events" show-back-button="true" to="/home"></page-header>
     <div class="past-event">
       <div>Your Past events</div>
-      <!-- <ul> -->
+      <ul>
         <!-- <template is="dom-repeat" items="{{pastEvents}}" as="event">
           <li>{{event}}</li>
         </template> -->
         <template is="dom-repeat" items="{{pastEvents}}" as="event">
           <single-hashtag hashtag="{{event}}"></single-hashtag>
         </template>
-      <!-- </ul> -->
-      <template is="dom-if" if="_hasNoPastEvents(pastEvents)">
+      </ul>
+      <template is="dom-if" if="_hasNoPastEvents">
         No past events
       </template>
     </div>
@@ -137,9 +137,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         console.log('pushed ', e);
       }
 
-      _hasNoPastEvents(pastEvents) {
+      _hasNoPastEvents() {
         console.log("no past events fn");
-        return pastEvents.length === 0;
+        if (pastEvents.length == 0) {
+          return true;
+        } else {
+          return false;
+        }
       }
 
       handleClickAddEvent() {
