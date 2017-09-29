@@ -101,13 +101,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             if (req.status == 200) {
               var jsonResponse = JSON.parse(req.responseText);
               var index;
-              var events = [];
               for (index = 0; index < jsonResponse.success.length; index++) {
                 var hashtag = "#" + jsonResponse.success[index].hash;
-                events.push(hashtag);
+                this._addEvent(hashtag);
               }
               this.pastEvents = events;
-              console.log(this.pastEvents);
+              console.log('this.pastEvents array: ', this.pastEvents);
               resolve(jsonResponse);
             }
             else {
@@ -131,6 +130,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           },
           isGeoEnabled: Boolean,
         };
+      }
+
+      _addEvent(e) {
+        this.push('pastEvents', e);
+        console.log('pushed ', e);
       }
 
       _hasNoPastEvents(pastEvents) {
