@@ -116,7 +116,7 @@
 
       ready() {
         super.ready();
-        if (this.events.length != 0) {
+        if (this.events && this.events.length != 0) {
           this.noEventsNearby = false;
         }
       }
