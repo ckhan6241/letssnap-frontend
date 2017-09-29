@@ -100,7 +100,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         attr-for-selected="name"
         fallback-selection="home"
         role="main">
-      <home-page name="home" latlng="{{latlng}}" events="{{events}}" is-loading="{{isLoading}}" is-geo-enabled="{{!message}}" ask-location="{{askLocation}}"></home-page>
+      <home-page name="home" latlng="{{latlng}}" events="{{events}}" is-loading="{{isLoading}}" is-geo-enabled="{{!message}}" ask-location="{{askLocation}}" noEventsNearby={{noEventsNearby}}></home-page>
       <event-page name="event"></event-page>
       <add-event-page name="add-event" latlng="{{latlng}}" ask-location="{{askLocation}}"></add-event-page>
       <admin-page name="admin" is-geo-enabled="{{!message}}"></admin-page>
@@ -225,7 +225,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             type: String,
             value: ""
           },
-          askLocation: Boolean
+          askLocation: Boolean,
+          noEventsNearby: true
         };
       }
 
@@ -248,6 +249,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           this.events = res;
           localStorage.events = res;
           this.isLoading = false;
+          if (this.events.length != 0) {
+            this.noEventsNearby = false;
+          }
           })
         })
       }

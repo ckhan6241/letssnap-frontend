@@ -86,7 +86,7 @@
           <template is="dom-repeat" items="{{events}}" as="event">
             <single-hashtag hashtag="{{event.hash}}"></single-hashtag>
           </template>
-            <template is="dom-if" if="_noEvent(events)">
+            <template is="dom-if" if="{{noEventsNearby}}">
               <p> No events nearby</p>
             </template>
         </template>
@@ -110,10 +110,7 @@
           },
           isGeoEnabled: Boolean,
           askLocation: Boolean,
-          noEventsNearby: {
-            type: Boolean,
-            value: true
-          }
+          noEventsNearby: Boolean
         };
       }
 
