@@ -118,7 +118,8 @@
       }
 
       ready() {
-        if (events.length != 0) {
+        super.ready();
+        if (this.events.length != 0) {
           this.noEventsNearby = false;
         }
       }
@@ -128,7 +129,7 @@
       }
 
       _noEvent(events) {
-        return events.length === 0;
+        return this.events.length === 0;
       }
     }
 
