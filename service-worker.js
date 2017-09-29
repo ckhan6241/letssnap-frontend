@@ -1,5 +1,5 @@
-var CACHE_NAME = 'letssnap-v3';
-var DATA_CACHE_NAME = 'letssnap-data-v1';
+var CACHE_NAME = 'letssnap-final';
+var DATA_CACHE_NAME = 'letssnap-data-final';
 var urlsToCache = [
   '/',
   '/node_modules/lodash/lodash.min.js',
