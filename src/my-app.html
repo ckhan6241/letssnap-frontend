@@ -24,9 +24,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="lazy-import" href="add-event-page.html">
 <link rel="lazy-import" href="admin-page.html">
 
-
-<script src="./api.js"></script>
-
 <dom-module id="my-app">
   <link rel="import" type="css" href="../bootstrap.min.css">
   <template>
@@ -121,6 +118,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   </template>
 
   <script>
+
+    const BASE_URL = 'https://www.letssnap-backend.tk'
+    const GROUPS_URL = BASE_URL + '/groups'
+    const SEARCH_URL = BASE_URL + '/groups/get/GroupsWithCoordinate'
+
+    function searchEvents(lat, lng, callback) {
+      fetch(SEARCH_URL + '/' + lat + '/' + lng, {
+        method: 'GET',
+        headers: {'Content-Type': 'application/json'},
+      }).then(callback)
+    }
     class MyApp extends Polymer.Element {
       static get is() {
         return 'my-app';
@@ -156,6 +164,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       startLocation() {
         localStorage.hasAskedLocation = true;
         this.askLocation = false;
+        if (!navigator.onLine) {
+          this.events = localStorage.events;
+        }
         if (navigator.geolocation) { // check if browser supports geolocation
           navigator.geolocation.watchPosition(function (position) {
               // success
@@ -234,6 +245,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         searchEvents(this.latlng.lat, this.latlng.lng, res=>{
           res.json().then(res=>{
           this.events = res;
+          localStorage.events = res;
           this.isLoading = false;
           })
         })

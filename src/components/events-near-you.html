@@ -69,6 +69,18 @@
         <p>Enable location service to find nearby events.<br>Enable it <a on-click="_handleClickEnableService">here</a></p>
       </template>
       <template is="dom-if" if="{{!askLocation}}">
+        <template is="dom-if" if="{{!isGeoEnabled}}">
+          <p class="noGeolocation"> Enable location service to find nearby events </p>
+        </template>
+        <template is="dom-if" if="{{isGeoEnabled}}">
+          <template is="dom-if" if="{{isLoading}}">
+            <div class="loader">
+              <svg viewBox="0 0 32 32" width="32" height="32">
+                <circle id="spinner" cx="16" cy="16" r="14" fill="none"></circle>
+              </svg>
+            </div>
+          </template>
+        </template>
         <template is="dom-if" if="{{!isLoading}}">
           <template is="dom-repeat" items="{{events}}" as="event">
             <single-hashtag hashtag="{{event.hash}}"></single-hashtag>
@@ -76,18 +88,6 @@
             <template is="dom-if" if="_noEvent(events)">
               <p> No events nearby</p>
             </template>
-          <template is="dom-if" if="{{!isGeoEnabled}}">
-            <p class="noGeolocation"> Enable location service to find nearby events </p>
-          </template>
-          <template is="dom-if" if="{{isGeoEnabled}}">
-            <template is="dom-if" if="{{isLoading}}">
-              <div class="loader">
-                <svg viewBox="0 0 32 32" width="32" height="32">
-                  <circle id="spinner" cx="16" cy="16" r="14" fill="none"></circle>
-                </svg>
-              </div>
-            </template>
-          </template>
         </template>
       </template>
     </div>
@@ -118,11 +118,6 @@
 
       _noEvent(events) {
         return events.length === 0;
-      }
-
-      ready() {
-        super.ready();
-        console.log(this.askLocation);
       }
     }
 

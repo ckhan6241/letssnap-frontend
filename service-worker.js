@@ -1,4 +1,4 @@
-var CACHE_NAME = 'letssnap-v2';
+var CACHE_NAME = 'letssnap-v3';
 var DATA_CACHE_NAME = 'letssnap-data-v1';
 var urlsToCache = [
   '/',
@@ -38,7 +38,8 @@ self.addEventListener('activate', function(e) {
 
 self.addEventListener('fetch', function(event) {
   var backendUrl = 'https://s3-ap-southeast-1.amazonaws.com/letssnap';
-  if (event.request.url.indexOf(backendUrl) > -1) {
+  var groupsUrl = 'https://www.letssnap-backend.tk/groups';
+  if (navigator.onLine && (event.request.url.indexOf(backendUrl) > -1 || event.request.url.indexOf(groupsUrl) > -1)) {
     event.respondWith(
       caches.open(DATA_CACHE_NAME).then(function(cache) {
         return fetch(event.request).then(function(response){
