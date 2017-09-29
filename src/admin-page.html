@@ -64,7 +64,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <single-hashtag hashtag="{{event}}"></single-hashtag><br>
         </template>
       </ul>
-      <template is="dom-if" if="_hasNoPastEvents(pastEvents)">
+      <template is="dom-if" if="{{hasNoPastEvents}}">
         No past events
       </template>
     </div>
@@ -106,6 +106,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               for (index = 0; index < jsonResponse.success.length; index++) {
                 var hashtag = jsonResponse.success[index].hash;
                 this._addEvent(hashtag);
+                this.hasNoPastEvents = false;
               }
               console.log('this.pastEvents array: ', this.pastEvents);
               resolve(jsonResponse);
@@ -130,6 +131,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             value: []
           },
           isGeoEnabled: Boolean,
+          hasNoPastEvents: {
+            type: Boolean,
+            value: true // true by default, becomes false when we populate pastEvents[]
+          }
         };
       }
 
