@@ -86,7 +86,7 @@
           <template is="dom-repeat" items="{{events}}" as="event">
             <single-hashtag hashtag="{{event.hash}}"></single-hashtag>
           </template>
-            <template is="dom-if" if="{{noEventsNearby}}">
+            <template is="dom-if" if="_noEvent(events)">
               <p> No events nearby</p>
             </template>
         </template>
